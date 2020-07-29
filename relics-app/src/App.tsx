@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {CorePanel} from "./panels/CorePanel";
+import {CorePanel} from "./core/CorePanel";
 
 function App() {
 

@@ -1,7 +1,9 @@
 import {IPurchasable } from "../IPurchaseable";
-import {GameState, GeneratorState} from "../../settings/game-state";
+import {GameState, GeneratorState} from "../../core/game-state";
 
 export class RelicGenerator implements IPurchasable {
+    updateClock = true;
+
     commitTransaction(gameState: GameState, amount: number): GameState {
         if(this.isValidPurchase(gameState, amount)) {
             const currCost = this.getCost(gameState, amount);

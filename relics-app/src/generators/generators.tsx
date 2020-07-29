@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GameState } from "../settings/game-state";
+import { GameState } from "../core/game-state";
 import {RelicGenerator} from "../economy/generators/RelicGenerator";
 
 type GeneratorProps = {
@@ -18,7 +18,7 @@ export class Generators extends React.Component<GeneratorProps> {
             <div>
                 <button onClick={() => onAddCurrency("relics", 1)}>Look for relics</button>
                 <br/>
-                <p>You have {gameState.currencies.relics} relics</p>
+                <p>You have {gameState.currencies.relics.toFixed()} relics</p>
                 <br/>
                 <div>
                     Hire some students to dust off relics for you. They work for relics.

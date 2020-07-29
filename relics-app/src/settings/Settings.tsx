@@ -1,6 +1,6 @@
 import * as React from "react";
-import {GameState} from "./game-state";
-import {saveGame} from "./saveService";
+import {GameState} from "../core/game-state";
+import {saveGame} from "../core/saveService";
 
 type SettingsProps = {
     gameState: GameState,
