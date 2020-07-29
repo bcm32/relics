@@ -1,17 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {AdventureLog} from "./adventure-log/adventure-log";
-import {Generators} from "./generators/generators";
+import {CorePanel} from "./panels/CorePanel";
 
 function App() {
-return (
-    <div className="App">
-        <header className="App-header">
-            <AdventureLog name="Adventurer"/>
-        </header>
-        <Generators/>
-    </div>
+
+    return (
+        <div className="App">
+            <CorePanel/>
+        </div>
 );
 }
 
