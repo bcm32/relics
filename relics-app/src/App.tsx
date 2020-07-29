@@ -1,17 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {CorePanel} from "./core/CorePanel";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Hello World
-        </p>
-      </header>
-    </div>
-  );
+
+    return (
+        <div className="App">
+            <CorePanel/>
+        </div>
+);
 }
 
 export default App;
