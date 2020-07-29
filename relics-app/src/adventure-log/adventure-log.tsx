@@ -7,7 +7,7 @@ type LogProps = {
 export class AdventureLog extends React.Component<LogProps> {
 
     getStory() {
-        return `${this.props.name} walks along a dusty road...`
+        return `These dusty relics are probably worth something!...`
     }
 
 
