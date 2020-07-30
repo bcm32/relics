@@ -3,7 +3,7 @@ import { GameState } from "../core/game-state";
 import {RelicGenerator} from "../economy/transactions/relicGenerator";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
 import ReactTooltip from "react-tooltip";
-import {assignGatherers, removeGatherers} from "../economy/jobAssignments";
+import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
 
 type GeneratorProps = {
     gameState: GameState,
@@ -25,18 +25,27 @@ export class RelicPanel extends React.Component<GeneratorProps> {
 
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;
+        const availableStudents = countAvailableStudents(gameState);
         return (
             <div>
                 <button onClick={() => onAddCurrency("relics", 1)}>Look for relics</button>
                 <p>
-                    Students working: {gameState.jobAssignments.gatherRelics}<button onClick={()=>this.assignGather()}>+</button><button onClick={()=>this.removeGather()}>-</button>
+                    Students working: {gameState.jobAssignments.gatherRelics}
+                    <button
+                        disabled={availableStudents <= 0}
+                        onClick={()=>this.assignGather()}>+</button>
+                    <button
+                        disabled={gameState.jobAssignments.gatherRelics <= 0}
+                        onClick={()=>this.removeGather()}>-</button>
                 </p>
                 <br/>
                 <div>
-                    <button data-tip data-for="hireStudent"
-                            onClick={() => onPurchase(1, this.studentTransaction)}>
-                        Hire a Student
-                    </button>
+                    <div data-tip data-for="hireStudent">
+                        <button disabled={!this.studentTransaction.isValidPurchase(gameState, 1)}
+                                onClick={() => onPurchase(1, this.studentTransaction)}>
+                            Hire a Student
+                        </button>
+                    </div>
                     <ReactTooltip id="hireStudent" place="top" effect="solid">
                         Hire some students to dust off relics for you. They work for relics.
                         Relics: {this.studentTransaction.getCost(gameState, 1)}
