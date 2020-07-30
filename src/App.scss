@@ -1,5 +1,7 @@
 .app {
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .app-header {
@@ -29,6 +31,11 @@
 
 .core-panel__flex {
   display: flex;
+  height: 100%;
   width: 100%;
   justify-content: space-between;
+}
+
+html, body, #root {
+  height: 100%
 }
