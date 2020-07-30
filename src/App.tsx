@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {CorePanel} from "./core/CorePanel";
 import {ThemeContext, themes} from "./layout/theme-context";
 
@@ -17,7 +17,6 @@ class App extends React.Component<AppProps, AppState> {
         super(props);
 
         this.toggleTheme = () => {
-            console.log("TOGGLE")
             this.setState(state => ({
                 theme:
                     state.theme === themes.dark

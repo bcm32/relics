@@ -18,9 +18,17 @@
 }
 
 .app--dark {
-  background: black
+  background: #121211;
+  color: white;
 }
 
 .app--light {
   background: whitesmoke;
+  color: black;
+}
+
+.core-panel__flex {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
