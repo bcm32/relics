@@ -27,8 +27,8 @@ export class GameClock {
     tick() {
         // TODO: Tickcount, random event on tickcount
         var newState = {...this.gameState};
-        if(this.gameState.generators.relicGenerator) {
-            newState.currencies.relics += this.gameState.generators.relicGenerator*this.tickRatio;
+        if(this.gameState.jobAssignments.gatherRelics) {
+            newState.resourceState.relics += this.gameState.jobAssignments.gatherRelics*this.tickRatio;
         }
 
         if(this.tickNumber >= this.maxTicks ) {

@@ -16,6 +16,7 @@ export function newSave(): GameState {
 }
 
 export function saveGame(gameState: GameState) {
+    gameState.saveTime = new Date();
     localStorage.setItem("RelicsSave", btoa(JSON.stringify(gameState)));
 }
 
