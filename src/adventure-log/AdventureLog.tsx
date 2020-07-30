@@ -2,7 +2,8 @@ import * as React from "react";
 import {JournalState} from "../core/game-state";
 
 type JournalProps = {
-    journalState: JournalState
+    journalState: JournalState,
+    clearLog: any
 }
 
 export class AdventureLog extends React.Component<JournalProps> {
@@ -12,12 +13,15 @@ export class AdventureLog extends React.Component<JournalProps> {
     }
 
     render() {
-        const { entries } = this.props.journalState;
-        const entryList = entries.map((entry) =>
-            <li>{entry}</li>
+        const { journalState, clearLog } = this.props;
+        const entryList = journalState.entries.map((entry) =>
+            <p>{entry}</p>
         );
         return (
-            <ul>{entryList}</ul>
+            <div>
+                <button onClick={() => clearLog()}>Clear Log</button>
+                <div>{entryList}</div>
+            </div>
         );
     }
 }

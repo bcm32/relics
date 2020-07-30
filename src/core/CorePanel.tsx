@@ -1,13 +1,13 @@
 import * as React from "react";
 import {loadSave, newSave, saveGame, saveGameExists} from "./saveService";
-import {Header} from "./Header";
+import {Header} from "../layout/Header";
 import {Generators} from "../generators/generators";
 import {Settings} from "../settings/Settings";
 import {GameState} from "./game-state";
 import {IPurchasable} from "../economy/IPurchaseable";
 import {GameClock} from "./game-clock";
 import {AdventureLog} from "../adventure-log/AdventureLog";
-import {MAX_LOG_SIZE} from "../config/constants";
+import {addJournalEntry, clearJournal} from "../adventure-log/journal";
 
 type CoreProps = {}
 type CoreState = {
@@ -30,7 +30,7 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
         // TODO: Abstract this for manual action & future FAME multiplier
         const newState = {...this.state.gameState};
         newState.currencies.relics += currencyAmount;
-        this.addJournalEntry(newState, "You dust off some potsherds.")
+        addJournalEntry(newState, "You dust off some potsherds.")
         this.setState({gameState: newState})
     }
 
@@ -45,11 +45,8 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
         }
     }
 
-    addJournalEntry(gameState: GameState, entry: string){
-        gameState.journalState.entries.push(entry);
-        if(gameState.journalState.entries.length >= MAX_LOG_SIZE) {
-            gameState.journalState.entries.shift();
-        }
+    clearLog() {
+        clearJournal(this.state.gameState)
     }
 
     save() {
@@ -62,21 +59,23 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
     render() {
         return (
             <div>
-                <header className="App-header">
+                <header className="app-header">
                     <Header gameState={this.state.gameState}/>
                 </header>
-                <Generators
-                    gameState={this.state.gameState}
-                    onAddCurrency={(currencyName: string, currencyAmount: number) => this.addCurrency(currencyName, currencyAmount)}
-                    onPurchase={(purchaseAmount: number, purchaseType: IPurchasable) => this.makePurchase(purchaseAmount, purchaseType)}
-                />
-                <div>
-                    <AdventureLog journalState={this.state.gameState.journalState}/>
+                <div className="core-panel__flex">
+                    <Generators
+                        gameState={this.state.gameState}
+                        onAddCurrency={(currencyName: string, currencyAmount: number) => this.addCurrency(currencyName, currencyAmount)}
+                        onPurchase={(purchaseAmount: number, purchaseType: IPurchasable) => this.makePurchase(purchaseAmount, purchaseType)}
+                    />
+                    <div>
+                        <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
+                    </div>
+                    <Settings
+                        gameState={this.state.gameState}
+                        onSave={() => this.save()}
+                    />
                 </div>
-                <Settings
-                    gameState={this.state.gameState}
-                    onSave={() => this.save()}
-                />
             </div>
         );
     }

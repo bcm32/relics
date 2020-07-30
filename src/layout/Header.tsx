@@ -1,5 +1,5 @@
 import * as React from "react";
-import {GameState} from "./game-state";
+import {GameState} from "../core/game-state";
 
 type LogProps = {
     gameState: GameState
