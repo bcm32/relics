@@ -8,18 +8,25 @@ import {IPurchasable} from "../economy/IPurchaseable";
 import {GameClock} from "./game-clock";
 import {AdventureLog} from "../adventure-log/AdventureLog";
 import {addJournalEntry, clearJournal} from "../adventure-log/journal";
+import {PanelSelector} from "../layout/PanelSelector";
+import {GENERATORS_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 
 type CoreProps = {}
 type CoreState = {
-    gameState: GameState
+    gameState: GameState,
+    activePanel: string
 }
 
-export class CorePanel<CoreProps, CoreState> extends React.Component {
+export class CorePanel extends React.Component<CoreProps, CoreState> {
     clock: GameClock | undefined;
-    readonly state = {gameState: saveGameExists() ? loadSave() : newSave()};
+    readonly state = {
+        gameState: saveGameExists() ? loadSave() : newSave(),
+        activePanel: GENERATORS_PANEL_KEY
+    };
 
     componentDidMount(): void {
         this.clock = new GameClock(this.state.gameState, (newState: GameState) => this.onTick(newState));
+        this.setState({activePanel: GENERATORS_PANEL_KEY});
     }
 
     onTick(newState: GameState) {
@@ -30,7 +37,7 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
         // TODO: Abstract this for manual action & future FAME multiplier
         const newState = {...this.state.gameState};
         newState.currencies.relics += currencyAmount;
-        addJournalEntry(newState, "You dust off some potsherds.")
+        addJournalEntry(newState, "You dust off some potsherds.");
         this.setState({gameState: newState})
     }
 
@@ -49,6 +56,10 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
         clearJournal(this.state.gameState)
     }
 
+    changeActivePanel(panelKey: string) {
+        this.setState({activePanel: panelKey});
+    }
+
     save() {
         const newState = {...this.state.gameState};
         newState.saveTime = new Date();
@@ -57,25 +68,40 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <header className="app-header">
-                    <Header gameState={this.state.gameState}/>
-                </header>
-                <div className="core-panel__flex">
+        let activePanel;
+        switch (this.state.activePanel) {
+            case SETTINGS_PANEL_KEY:
+                activePanel = (
+                    <Settings
+                        gameState={this.state.gameState}
+                        onSave={() => this.save()}
+                    />
+                )
+                break;
+            case GENERATORS_PANEL_KEY:
+            default:
+                activePanel = (
                     <Generators
                         gameState={this.state.gameState}
                         onAddCurrency={(currencyName: string, currencyAmount: number) => this.addCurrency(currencyName, currencyAmount)}
                         onPurchase={(purchaseAmount: number, purchaseType: IPurchasable) => this.makePurchase(purchaseAmount, purchaseType)}
                     />
+                );
+        }
+
+        return (
+            <div>
+                <header className="app-header">
+                    <Header gameState={this.state.gameState}/>
+                </header>
+                <PanelSelector onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}/>
+                <div className="core-panel__flex">
+                    {activePanel}
                     <div>
                         <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
                     </div>
-                    <Settings
-                        gameState={this.state.gameState}
-                        onSave={() => this.save()}
-                    />
                 </div>
+
             </div>
         );
     }
