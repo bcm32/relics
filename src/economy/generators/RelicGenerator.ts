@@ -1,5 +1,5 @@
 import {IPurchasable } from "../IPurchaseable";
-import {GameState, GeneratorState} from "../../core/game-state";
+import {GameState} from "../../core/game-state";
 
 export class RelicGenerator implements IPurchasable {
     updateClock = true;

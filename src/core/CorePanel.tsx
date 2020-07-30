@@ -7,7 +7,6 @@ import {GameState} from "./game-state";
 import {IPurchasable} from "../economy/IPurchaseable";
 import {GameClock} from "./game-clock";
 import {AdventureLog} from "../adventure-log/AdventureLog";
-import {MAX_LOG_SIZE} from "../config/constants";
 import {addJournalEntry, clearJournal} from "../adventure-log/journal";
 
 type CoreProps = {}
@@ -60,7 +59,7 @@ export class CorePanel<CoreProps, CoreState> extends React.Component {
     render() {
         return (
             <div>
-                <header className="App-header">
+                <header className="app-header">
                     <Header gameState={this.state.gameState}/>
                 </header>
                 <div className="core-panel__flex">
