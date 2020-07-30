@@ -67,6 +67,18 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         saveGame(newState);
     }
 
+    clearSave() {
+        console.log("CLEARING SAVE")
+        // @ts-ignore
+        this.clock.clearClock();
+        const newState = newSave();
+        newState.saveTime = new Date();
+        this.setState({gameState: newState});
+        saveGame(newState);
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    }
+
     render() {
         let activePanel;
         switch (this.state.activePanel) {
@@ -75,6 +87,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                     <Settings
                         gameState={this.state.gameState}
                         onSave={() => this.save()}
+                        onClearSave={() => this.clearSave()}
                     />
                 )
                 break;

@@ -11,13 +11,14 @@ export function loadSave() {
     return merged;
 }
 
-export function newSave() {
+export function newSave(): GameState {
     return new GameState();
 }
 
 export function saveGame(gameState: GameState) {
     localStorage.setItem("RelicsSave", btoa(JSON.stringify(gameState)));
 }
+
 
 export function exportSave(gameState: GameState) {
     saveGame(gameState);

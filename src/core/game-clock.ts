@@ -46,5 +46,9 @@ export class GameClock {
         this.resourceClockId = setInterval(() => this.tick(), TICK_SPEED);
     }
 
+    clearClock() {
+        clearInterval(this.resourceClockId);
+        clearInterval(this.saveClockId);
+    }
 
 }
