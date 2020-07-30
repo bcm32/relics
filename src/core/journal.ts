@@ -1,4 +1,4 @@
-import {GameState} from "../core/game-state";
+import {GameState} from "./game-state";
 import {MAX_LOG_SIZE} from "../config/constants";
 
 export function addJournalEntry(gameState: GameState, entry: string){

@@ -9,8 +9,14 @@ type SettingsProps = {
 }
 
 export class Settings extends React.Component<SettingsProps> {
+    onToggleTheme(toggleTheme: any) {
+        const { gameState } = this.props;
+        gameState.settings.darkMode = !gameState.settings.darkMode;
+        toggleTheme();
+    }
     render() {
         const {onSave, onClearSave} = this.props;
+
         return (
             <div>
                 <div>
@@ -20,7 +26,7 @@ export class Settings extends React.Component<SettingsProps> {
                 <div>
                     <ThemeContext.Consumer>
                         {({theme, toggleTheme}) => (
-                            <button onClick={() => toggleTheme()}>
+                            <button onClick={() => this.onToggleTheme(toggleTheme)}>
                                 Toggle Dark Mode
                             </button>
                         )}

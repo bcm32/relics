@@ -1,7 +1,8 @@
 import React from 'react';
-import './App.scss';
-import {CorePanel} from "./core/CorePanel";
+import './app.scss';
+import {CorePanel} from "./core/corePanel";
 import {ThemeContext, themes} from "./layout/theme-context";
+import {loadSave, newSave, saveGameExists} from "./core/saveService";
 
 type AppProps = {}
 type AppState = {
@@ -15,6 +16,8 @@ class App extends React.Component<AppProps, AppState> {
 
     constructor(props: any) {
         super(props);
+        const darkMode = saveGameExists() && loadSave().settings.darkMode;
+        console.log("MODE", darkMode);
 
         this.toggleTheme = () => {
             this.setState(state => ({
@@ -26,7 +29,7 @@ class App extends React.Component<AppProps, AppState> {
         };
 
         this.state = {
-            theme: themes.light,
+            theme: darkMode ? themes.dark : themes.light,
             toggleTheme: this.toggleTheme,
         };
 

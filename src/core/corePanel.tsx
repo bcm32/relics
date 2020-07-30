@@ -1,15 +1,16 @@
 import * as React from "react";
 import {loadSave, newSave, saveGame, saveGameExists} from "./saveService";
 import {Header} from "../layout/Header";
-import {Generators} from "../generators/generators";
+import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../settings/Settings";
 import {GameState} from "./game-state";
-import {IPurchasable} from "../economy/IPurchaseable";
+import {ITransaction} from "../economy/transactions/ITransaction";
 import {GameClock} from "./game-clock";
-import {AdventureLog} from "../adventure-log/AdventureLog";
-import {addJournalEntry, clearJournal} from "../adventure-log/journal";
 import {PanelSelector} from "../layout/PanelSelector";
 import {GENERATORS_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {addJournalEntry, clearJournal} from "./journal";
+import {AdventureLog} from "../panels/adventureLog";
+import {ResourcePanel} from "../panels/resourcePanel";
 
 type CoreProps = {}
 type CoreState = {
@@ -36,12 +37,12 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     addCurrency(currencyName: string, currencyAmount: number) {
         // TODO: Abstract this for manual action & future FAME multiplier
         const newState = {...this.state.gameState};
-        newState.currencies.relics += currencyAmount;
+        newState.resourceState.relics += currencyAmount;
         addJournalEntry(newState, "You dust off some potsherds.");
         this.setState({gameState: newState})
     }
 
-    makePurchase(purchaseAmount: number, purchaseType: IPurchasable) {
+    makePurchase(purchaseAmount: number, purchaseType: ITransaction) {
         let newState = {...this.state.gameState};
         newState = purchaseType.commitTransaction(newState, purchaseAmount);
 
@@ -62,13 +63,11 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
 
     save() {
         const newState = {...this.state.gameState};
-        newState.saveTime = new Date();
         this.setState({gameState: newState});
         saveGame(newState);
     }
 
     clearSave() {
-        console.log("CLEARING SAVE")
         // @ts-ignore
         this.clock.clearClock();
         const newState = newSave();
@@ -94,10 +93,10 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
             case GENERATORS_PANEL_KEY:
             default:
                 activePanel = (
-                    <Generators
+                    <RelicPanel
                         gameState={this.state.gameState}
                         onAddCurrency={(currencyName: string, currencyAmount: number) => this.addCurrency(currencyName, currencyAmount)}
-                        onPurchase={(purchaseAmount: number, purchaseType: IPurchasable) => this.makePurchase(purchaseAmount, purchaseType)}
+                        onPurchase={(purchaseAmount: number, purchaseType: ITransaction) => this.makePurchase(purchaseAmount, purchaseType)}
                     />
                 );
         }
@@ -109,10 +108,9 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                 </header>
                 <PanelSelector onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}/>
                 <div className="core-panel__flex">
+                    <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
                     {activePanel}
-                    <div>
-                        <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
-                    </div>
+                    <ResourcePanel gameState={this.state.gameState}/>
                 </div>
 
             </div>
