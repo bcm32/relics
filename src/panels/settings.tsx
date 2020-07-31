@@ -1,6 +1,7 @@
 import {GameState} from "../core/game-state";
 import {ThemeContext} from "../layout/theme-context";
 import React from "react";
+import {RelicsButton} from "../shared/relicsButton";
 
 type SettingsProps = {
     gameState: GameState,
@@ -19,16 +20,18 @@ export class Settings extends React.Component<SettingsProps> {
 
         return (
             <div>
-                <div>
-                    <button onClick={() => onSave()}>Save</button>
-                    <button onClick={() => onClearSave()}>Clear Save</button>
+                <div className={"button-container"}>
+                    <RelicsButton onClick={() => onSave()}>Save</RelicsButton>
+                    <RelicsButton onClick={() => onClearSave()}>Clear Save</RelicsButton>
                 </div>
                 <div>
                     <ThemeContext.Consumer>
                         {({theme, toggleTheme}) => (
-                            <button onClick={() => this.onToggleTheme(toggleTheme)}>
-                                Toggle Dark Mode
-                            </button>
+                            <div className={"button-container"}>
+                                <RelicsButton onClick={() => this.onToggleTheme(toggleTheme)}>
+                                    Toggle Dark Mode
+                                </RelicsButton>
+                            </div>
                         )}
                     </ThemeContext.Consumer>
                 </div>
