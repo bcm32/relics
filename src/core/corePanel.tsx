@@ -3,7 +3,7 @@ import {loadSave, newSave, saveGame, saveGameExists} from "./saveService";
 import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
-import {ITransaction} from "../economy/transactions/ITransaction";
+import {ITransaction} from "../economy/ITransaction";
 import {GameClock} from "./game-clock";
 import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
@@ -65,7 +65,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     save() {
         const newState = {...this.state.gameState};
         this.setState({gameState: newState});
-        saveGame(newState);
+        saveGame(newState, true);
     }
 
     clearSave() {

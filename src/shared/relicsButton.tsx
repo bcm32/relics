@@ -7,6 +7,7 @@ type RelicsButtonProps = {
   disabled?: any;
   tooltip?: string;
   compact?: boolean;
+  className?: string;
 }
 
 export class RelicsButton extends React.Component<RelicsButtonProps> {
@@ -16,6 +17,8 @@ export class RelicsButton extends React.Component<RelicsButtonProps> {
         let className = "relics-button";
         if(disabled) className += " relics-button--disabled";
         if(compact) className += " relics-button--compact";
+        if(this.props.className) className += " " + this.props.className;
+
         const clickFunc = disabled ? () => {} : onClick;
         const dataTipAttr = {};
         if(tooltip)

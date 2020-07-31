@@ -33,7 +33,9 @@ export class AdventureLog extends React.Component<JournalProps> {
         );
         return (
             <div className="panel--left-align journal-panel">
-                <RelicsButton onClick={() => clearLog()}>Clear Log</RelicsButton>
+                <div className="button-container">
+                    <RelicsButton onClick={() => clearLog()}>Clear Log</RelicsButton>
+                </div>
                 <div className="journal">{entryList}</div>
             </div>
         );

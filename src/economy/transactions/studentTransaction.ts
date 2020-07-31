@@ -1,4 +1,4 @@
-import {ITransaction } from "./ITransaction";
+import {ITransaction } from "../ITransaction";
 import {GameState} from "../../core/game-state";
 
 export class StudentTransaction implements ITransaction {
@@ -24,7 +24,7 @@ export class StudentTransaction implements ITransaction {
         let sum = 0;
         let theoreticalAmt = gameState.resourceState.students || 0;
         for (let i = 0; i < purchaseAmount; i++) {
-            sum += 15 + theoreticalAmt * 10;
+            sum += 10 + theoreticalAmt * 5;
             theoreticalAmt++;
         }
         return sum;

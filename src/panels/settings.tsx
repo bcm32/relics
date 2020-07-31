@@ -35,7 +35,7 @@ export class Settings extends React.Component<SettingsProps> {
                         )}
                     </ThemeContext.Consumer>
                 </div>
-                <p>Last Saved at ${this.props.gameState.saveTime ? this.props.gameState.saveTime.toString() : ""}</p>
+                <div>Relics - A game by bcm32.</div>
             </div>
         );
     }

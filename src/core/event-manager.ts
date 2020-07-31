@@ -1,6 +1,6 @@
 import {GameState} from "./game-state";
 import {addDetailedJournalEntry, addJournalEntry, BLOOD_ENTRY_TYPE} from "./journal";
-import {countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
+import {countAvailableStudents, removeGatherers, removeStudyRelics} from "../economy/jobAssignments";
 
 export function randomEvent(gameState: GameState) {
     const diceRoll = roll1d100();
@@ -11,11 +11,14 @@ export function randomEvent(gameState: GameState) {
         addJournalEntry(gameState, "A stranger shuffles up and hands something to you: +100 Relics!");
         gameState.resourceState.relics += 100
     }
-    console.log(diceRoll);
     if(diceRoll === 1 && gameState.resourceState.students > 2) {
         // A dark event occurs
         if(countAvailableStudents(gameState) <= 0) {
-            removeGatherers(1, gameState);
+            if(gameState.jobAssignments.gatherRelics >= 1) {
+                removeGatherers(1, gameState);
+            } else if (gameState.jobAssignments.studyRelics >= 1) {
+                removeStudyRelics(1, gameState);
+            }
         }
         gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
         gameState.resourceState.students -= 1;

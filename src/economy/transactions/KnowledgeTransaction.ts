@@ -1,4 +1,4 @@
-import {ITransaction } from "./ITransaction";
+import {ITransaction } from "../ITransaction";
 import {GameState} from "../../core/game-state";
 
 export class KnowledgeTransaction implements ITransaction {
