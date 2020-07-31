@@ -86,6 +86,15 @@
     color: gray;
     cursor: default;
   }
+
+  &.relics-button--compact {
+    display: inline-block;
+    text-align: center;
+    vertical-align: center;
+    padding: 0 2px 8px 2px;
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .nav-panel {
@@ -107,6 +116,9 @@
   }
 }
 
+.button-container {
+  padding: 8px 0;
+}
 
 .padded-text {
   padding-top: 4px;

@@ -26,25 +26,35 @@ export class RelicPanel extends React.Component<GeneratorProps> {
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;
         const availableStudents = countAvailableStudents(gameState);
+        const studentsHired = gameState.resourceState.students >= 1;
+
         return (
             <div className="panel--left-align">
-                <RelicsButton onClick={() => onAddCurrency("relics", 1)}>Look for relics</RelicsButton>
-                <p>
-                    Students working: {gameState.jobAssignments.gatherRelics}
-                    <span><RelicsButton
-                        disabled={availableStudents <= 0}
-                        onClick={()=>this.assignGather()}>+</RelicsButton>
-                    <RelicsButton
-                        disabled={gameState.jobAssignments.gatherRelics <= 0}
-                        onClick={()=>this.removeGather()}
-                    >
-                        -
-                    </RelicsButton></span>
-
-                </p>
+                <div className="button-container">
+                    <RelicsButton onClick={() => onAddCurrency("relics", 1)}>Look for relics</RelicsButton>
+                </div>
+                {studentsHired &&
+                    <div>
+                        <div>Students:</div>
+                        <div>
+                            Gathering Relics: {gameState.jobAssignments.gatherRelics}
+                            <span><RelicsButton
+                                compact={true}
+                                disabled={availableStudents <= 0}
+                                onClick={() => this.assignGather()}>+</RelicsButton>
+                            <RelicsButton
+                                compact={true}
+                                disabled={gameState.jobAssignments.gatherRelics <= 0}
+                                onClick={() => this.removeGather()}
+                            >
+                                -
+                            </RelicsButton></span>
+                        </div>
+                    </div>
+                }
                 <br/>
                 <div>
-                    <div>
+                    <div className="button-container">
                         <RelicsButton
                                 disabled={!this.studentTransaction.isValidPurchase(gameState, 1)}
                                 onClick={() => onPurchase(1, this.studentTransaction)}

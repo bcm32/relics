@@ -25,3 +25,8 @@ export function exportSave(gameState: GameState) {
     saveGame(gameState);
     // TODO: export
 }
+
+export function importSave(gameState: GameState) {
+    saveGame(gameState);
+    // TODO: import
+}
