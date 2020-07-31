@@ -17,7 +17,6 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: any) {
         super(props);
         const darkMode = saveGameExists() && loadSave().settings.darkMode;
-        console.log("MODE", darkMode);
 
         this.toggleTheme = () => {
             this.setState(state => ({

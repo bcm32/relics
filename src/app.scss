@@ -1,4 +1,5 @@
 .app {
+  transition: background-color 0.8s ease, color 0.8s ease;
   height: 100%;
   width: 100%;
 }
@@ -67,13 +68,25 @@
   padding-top: 8px;
 }
 
-.app--dark .journal__entry:first-of-type {
-  color: white;
+.app--dark .journal__entry {
+  &:first-of-type {
+    color: white;
+  }
+  &.journal__entry--achievement {
+    color: darkcyan;
+  }
 }
 
-.app--light .journal__entry:first-of-type {
-  color: black;
+.app--light .journal__entry {
+  &:first-of-type {
+    color: black;
+  }
+  &.journal__entry--achievement {
+    color: fuchsia;
+  }
+
 }
+
 
 .relics-button {
   border-radius: 4px;
@@ -85,6 +98,16 @@
   &.relics-button--disabled {
     color: gray;
     cursor: default;
+  }
+
+  &.relics-button--compact {
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    vertical-align: center;
+    padding: 0 2px 8px 2px;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -107,6 +130,9 @@
   }
 }
 
+.button-container {
+  padding: 8px 0;
+}
 
 .padded-text {
   padding-top: 4px;

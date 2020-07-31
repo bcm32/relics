@@ -24,7 +24,7 @@ export class StudentTransaction implements ITransaction {
         let sum = 0;
         let theoreticalAmt = gameState.resourceState.students || 0;
         for (let i = 0; i < purchaseAmount; i++) {
-            sum += 25 + theoreticalAmt * 10;
+            sum += 15 + theoreticalAmt * 10;
             theoreticalAmt++;
         }
         return sum;

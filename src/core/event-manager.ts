@@ -3,7 +3,6 @@ import {addJournalEntry} from "./journal";
 
 export function randomEvent(gameState: GameState) {
     const diceRoll = roll1d100();
-    console.log(diceRoll);
     if(diceRoll >= 95) {
         addJournalEntry(gameState, "The wind blows across the dusty plain")
     }

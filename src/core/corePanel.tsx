@@ -5,11 +5,12 @@ import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
 import {ITransaction} from "../economy/transactions/ITransaction";
 import {GameClock} from "./game-clock";
-import {GENERATORS_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
 import {AdventureLog} from "../panels/adventureLog";
 import {ResourcePanel} from "../panels/resourcePanel";
 import {PanelSelector} from "../layout/panelSelector";
+import {ResearchLab} from "../panels/lab";
 
 type CoreProps = {}
 type CoreState = {
@@ -25,6 +26,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     };
 
     componentDidMount(): void {
+        // TODO: Calculate offline progress before starting clock
         this.clock = new GameClock(this.state.gameState, (newState: GameState) => this.onTick(newState));
         this.setState({activePanel: GENERATORS_PANEL_KEY});
     }
@@ -87,7 +89,12 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         onSave={() => this.save()}
                         onClearSave={() => this.clearSave()}
                     />
-                )
+                );
+                break;
+            case LAB_KEY:
+                activePanel = (
+                    <ResearchLab gameState={this.state.gameState}/>
+                );
                 break;
             case GENERATORS_PANEL_KEY:
             default:
@@ -109,6 +116,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                     <div className="core-panel__center-column">
                         <PanelSelector onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}
                             selected={this.state.activePanel}
+                            gameState={this.state.gameState}
                         />
                         {activePanel}
                     </div>
