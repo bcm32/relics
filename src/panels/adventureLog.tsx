@@ -1,5 +1,6 @@
 import * as React from "react";
 import {JournalState} from "../core/game-state";
+import {RelicsButton} from "../shared/relicsButton";
 
 type JournalProps = {
     journalState: JournalState,
@@ -14,13 +15,13 @@ export class AdventureLog extends React.Component<JournalProps> {
 
     render() {
         const { journalState, clearLog } = this.props;
-        const entryList = journalState.entries.map((entry) =>
-            <p>{entry}</p>
+        const entryList = journalState.entries.reverse().map((entry) =>
+            <div className="padded-text journal__entry">{entry}</div>
         );
         return (
-            <div>
-                <button onClick={() => clearLog()}>Clear Log</button>
-                <div>{entryList}</div>
+            <div className="panel--left-align journal-panel">
+                <RelicsButton onClick={() => clearLog()}>Clear Log</RelicsButton>
+                <div className="journal">{entryList}</div>
             </div>
         );
     }

@@ -4,6 +4,7 @@ export class GameState {
     journalState: JournalState = new JournalState();
     saveTime: Date = new Date();
     settings: SettingsState = new SettingsState();
+    achievements: Achievements = new Achievements();
 }
 
 export class ResourceState {
@@ -23,4 +24,8 @@ export class JournalState {
 
 export class SettingsState {
     darkMode: boolean = false;
+}
+
+export class Achievements {
+
 }
