@@ -12,9 +12,9 @@ export class ResourcePanel extends React.Component<ResourceProps> {
     render() {
         const { gameState } = this.props;
         return (
-            <div>
-                <div>Students: {countAvailableStudents(gameState)}/{gameState.resourceState.students}</div>
-                <div>Relics: {gameState.resourceState.relics.toFixed()}</div>
+            <div className="panel--right-align">
+                <div className="padded-text">Students: {countAvailableStudents(gameState)}/{gameState.resourceState.students}</div>
+                <div className="padded-text">Relics: {gameState.resourceState.relics.toFixed()}</div>
             </div>
         );
     }

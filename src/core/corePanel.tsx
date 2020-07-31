@@ -1,16 +1,15 @@
 import * as React from "react";
 import {loadSave, newSave, saveGame, saveGameExists} from "./saveService";
-import {Header} from "../layout/Header";
 import {RelicPanel} from "../panels/relicPanel";
-import {Settings} from "../settings/Settings";
+import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
 import {ITransaction} from "../economy/transactions/ITransaction";
 import {GameClock} from "./game-clock";
-import {PanelSelector} from "../layout/PanelSelector";
 import {GENERATORS_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
 import {AdventureLog} from "../panels/adventureLog";
 import {ResourcePanel} from "../panels/resourcePanel";
+import {PanelSelector} from "../layout/panelSelector";
 
 type CoreProps = {}
 type CoreState = {
@@ -102,15 +101,20 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         }
 
         return (
-            <div>
-                <header className="app-header">
-                    <Header gameState={this.state.gameState}/>
-                </header>
-                <PanelSelector onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}/>
+            <div className="core-panel">
                 <div className="core-panel__flex">
-                    <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
-                    {activePanel}
-                    <ResourcePanel gameState={this.state.gameState}/>
+                    <div className="core-panel__left-column">
+                        <AdventureLog clearLog={() => this.clearLog()} journalState={this.state.gameState.journalState}/>
+                    </div>
+                    <div className="core-panel__center-column">
+                        <PanelSelector onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}
+                            selected={this.state.activePanel}
+                        />
+                        {activePanel}
+                    </div>
+                    <div className="core-panel__right-column">
+                        <ResourcePanel gameState={this.state.gameState}/>
+                    </div>
                 </div>
 
             </div>

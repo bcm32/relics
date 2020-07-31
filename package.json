@@ -1,6 +1,6 @@
 {
   "name": "relics-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "homepage": "http://bcm32.github.io/relics",
   "dependencies": {
