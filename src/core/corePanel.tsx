@@ -93,7 +93,10 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                 break;
             case LAB_KEY:
                 activePanel = (
-                    <ResearchLab gameState={this.state.gameState}/>
+                    <ResearchLab
+                        gameState={this.state.gameState}
+                        onPurchase={(purchaseAmount: number, purchaseType: ITransaction) => this.makePurchase(purchaseAmount, purchaseType)}
+                    />
                 );
                 break;
             case GENERATORS_PANEL_KEY:
