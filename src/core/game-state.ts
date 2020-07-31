@@ -13,6 +13,8 @@ export class ResourceState {
     relics: number = 0;
     relicGenerator: number = 0;
     students: number = 0;
+    knowledge: number = 0;
+    blood: number = 0;
     money: number = 0;
     fame: number = 0;
     whispers: number = 0;

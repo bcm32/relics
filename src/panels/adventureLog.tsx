@@ -1,7 +1,7 @@
 import * as React from "react";
 import {JournalState} from "../core/game-state";
 import {RelicsButton} from "../shared/relicsButton";
-import {ACHIEVEMENT_ENTRY_TYPE, COMMON_ENTRY_TYPE, DetailedEntry} from "../core/journal";
+import {ACHIEVEMENT_ENTRY_TYPE, BLOOD_ENTRY_TYPE, COMMON_ENTRY_TYPE, DetailedEntry} from "../core/journal";
 
 type JournalProps = {
     journalState: JournalState,
@@ -14,6 +14,9 @@ export class AdventureLog extends React.Component<JournalProps> {
         switch (entry.entryType) {
             case ACHIEVEMENT_ENTRY_TYPE:
                 className += " journal__entry--achievement";
+                break;
+            case BLOOD_ENTRY_TYPE:
+                className += " blood-text";
                 break;
             case COMMON_ENTRY_TYPE:
             default:

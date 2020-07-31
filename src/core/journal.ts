@@ -3,6 +3,7 @@ import {MAX_LOG_SIZE} from "../config/constants";
 
 export const ACHIEVEMENT_ENTRY_TYPE = "ACHIEVEMENT";
 export const COMMON_ENTRY_TYPE = "COMMON";
+export const BLOOD_ENTRY_TYPE = "BLOOD";
 
 export type DetailedEntry = {
     entry: string,

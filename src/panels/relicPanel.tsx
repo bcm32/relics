@@ -4,6 +4,7 @@ import {RelicGenerator} from "../economy/transactions/relicGenerator";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
 import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
+import {KnowledgeTransaction} from "../economy/transactions/KnowledgeTransaction";
 
 type GeneratorProps = {
     gameState: GameState,
