@@ -57,7 +57,7 @@ export class ResearchLab extends React.Component<LabProps> {
                             removeWorkers={(amount:number) => this.removeStudentsStudy(amount)}
                             currentlyAssigned={gameState.jobAssignments.studyRelics}
                             availableWorkers={availableStudents}
-                            tooltip={"Produces 1 knowledge per 50 relics."}
+                            tooltip={"Produces 1 knowledge per 100 relics."}
                         >
                             Student Studying Relics
                         </AssignWorkerOptions>
@@ -99,7 +99,7 @@ export class ResearchLab extends React.Component<LabProps> {
                             tooltip={"Buy the team their very first shovel. It's better than none.\n"
                             + "Money: 50"}
                         >
-                            Procure Funding
+                            Better Shovels
                         </RelicsButton>
                     )}
                 </div>
