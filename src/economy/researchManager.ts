@@ -13,5 +13,5 @@ export const allResearches: typeof Research[] = [
 ];
 
 export function getAvailableResearches(gameState: GameState): typeof Research[] {
-    return allResearches.filter(() => Research.isAvailable(gameState));
+    return allResearches.filter((r) => r.isAvailable(gameState));
 }
