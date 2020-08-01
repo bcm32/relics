@@ -2,6 +2,12 @@ import {GameState} from "./game-state";
 import {addDetailedJournalEntry, addJournalEntry, BLOOD_ENTRY_TYPE} from "./journal";
 import {countAvailableStudents, removeGatherers, removeStudyRelics} from "../economy/jobAssignments";
 
+export function randomEventsForDuration(gameState: GameState, amount: number) {
+    for (let i = 0; i < amount; i++) {
+        randomEvent(gameState);
+    }
+}
+
 export function randomEvent(gameState: GameState) {
     const diceRoll = roll1d100();
     if(diceRoll >= 95) {
