@@ -1,6 +1,6 @@
-$knowledge-color: #803b7e;
-$blood-color: red;
-$money-color: gold;
+$knowledge-color: #AE81FF;
+$blood-color: #F92672;
+$money-color: #E6DB74;
 
 // Light
 $light-bg: #fff;
@@ -8,9 +8,10 @@ $light-secondary: gray;
 $light-text: black;
 
 // Dark
-$dark-bg: #121212;
-$dark-secondary: gray;
-$dark-text: #fff;
+$dark-bg: #282828;
+$dark-secondary: #49483E;
+$dark-text: #F8F8F0;
+$dark-gray: #888;
 
 .app {
   transition: background-color 0.8s ease, color 0.8s ease;
@@ -52,7 +53,7 @@ $dark-text: #fff;
 
 .core-panel__left-column {
   width: 20vw;
-  border-right: 1px gray solid;
+  border-right: 1px $dark-secondary solid;
   margin-right: 4px;
 }
 .core-panel__right-column {
@@ -86,7 +87,7 @@ $dark-text: #fff;
   overflow: hidden;
 
   .journal__entry {
-    color: gray;
+    color: $dark-gray;
   }
 }
 
@@ -141,7 +142,7 @@ $dark-text: #fff;
  */
 .relics-tooltip {
   .relics-tooltip__description {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid $dark-gray;
     text-align: center;
     max-width: 240px;
   }
@@ -171,13 +172,13 @@ $dark-text: #fff;
  ****************/
 .relics-button {
   border-radius: 4px;
-  border: gray 1px solid;
+  border: $dark-gray 1px solid;
   padding: 6px;
   cursor: pointer;
   user-select: none;
 
   &.relics-button--disabled {
-    color: gray;
+    color: $dark-gray;
     cursor: default;
   }
 
@@ -197,13 +198,13 @@ $dark-text: #fff;
   padding-top: 8px;
 }
 .nav-button {
-  border: gray 1px solid;
+  border: $dark-gray 1px solid;
   padding: 6px;
   cursor: pointer;
   user-select: none;
 
   &.nav-button--disabled {
-    color: gray;
+    color: $dark-gray;
     cursor: default;
   }
   &.nav-button--selected {
@@ -217,7 +218,7 @@ $dark-text: #fff;
 }
 
 .resources__container {
-  border: 1px solid gray;
+  border: 1px solid $dark-gray;
   padding: 4px;
   margin: 8px;
 }

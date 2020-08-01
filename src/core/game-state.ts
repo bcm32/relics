@@ -34,7 +34,7 @@ export class JournalState {
 }
 
 export class SettingsState {
-    darkMode: boolean = false;
+    darkMode: boolean = true;
 }
 
 export class Achievements {
