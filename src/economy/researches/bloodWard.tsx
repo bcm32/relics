@@ -1,3 +1,4 @@
+import React from "react";
 import {Transaction} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import {addDetailedJournalEntry, BLOOD_ENTRY_TYPE} from "../../core/journal";
@@ -6,7 +7,7 @@ export class BloodWard extends Transaction {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
-        if(this.isValidPurchase(gameState, amount)) {
+        if(BloodWard.isValidPurchase(gameState, amount)) {
             gameState.resourceState.relics -= 100;
             gameState.resourceState.blood -= 1;
             gameState.resourceState.knowledge -= 20;
@@ -26,8 +27,15 @@ export class BloodWard extends Transaction {
 
     static buildTooltip(gameState: GameState): any {
         return (
-            <div>
-                Wow
+            <div className="relics-tooltip">
+                <div className="relics-tooltip__description">
+                    The excavated ruins are carved with a repeating pattern, and no one has disappeared in there yet.
+                </div>
+                <div className="relics-tooltip__cost">
+                    <div>Relics: 100</div>
+                    <div className="knowledge-text">Knowledge: 20</div>
+                    <div className="blood-text">Blood: 1</div>
+                </div>
             </div>
         );
     }

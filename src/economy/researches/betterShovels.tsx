@@ -25,20 +25,13 @@ export class BetterShovels extends Transaction {
     static buildTooltip(gameState: GameState): any {
         return (
             <div className="relics-tooltip">
-            <div className="relics-tooltip__description">
-                Inscribe a ward.
-        </div>
-        <div className="relics-tooltip__cost">
-            <div>Relics: 100</div>
-        <div className="knowledge-text">Knowledge: 20</div>
-        <div className="blood-text">Blood: 1</div>
-        </div>
-        </div>
-    );
+                <div className="relics-tooltip__description">
+                    Buy the team their very first shovel. It's better than none.
+                </div>
+                <div className="relics-tooltip__cost">
+                    <div className="money-text">Money: 50</div>
+                </div>
+            </div>
+        );
     }
-    static buildTooltip(gameState: GameState) {
-        "Buy the team their very first shovel. It's better than none.\n"
-        + "Money: 50"
-    }
-
 }
