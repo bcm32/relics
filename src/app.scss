@@ -1,7 +1,3 @@
-$knowledge-color: #AE81FF;
-$blood-color: #F92672;
-$money-color: #E6DB74;
-
 // Light
 $light-bg: #fff;
 $light-secondary: gray;
@@ -12,6 +8,12 @@ $dark-bg: #282828;
 $dark-secondary: #49483E;
 $dark-text: #F8F8F0;
 $dark-gray: #888;
+$dark-blue: #66D9EF;
+$purple: #AE81FF;
+
+$knowledge-color: $purple;
+$blood-color: #F92672;
+$money-color: #E6DB74;
 
 .app {
   transition: background-color 0.8s ease, color 0.8s ease;
@@ -33,6 +35,15 @@ $dark-gray: #888;
 .app--dark {
   background: $dark-bg;
   color: $dark-text;
+
+  a {
+    &:link {
+      color: $dark-blue;
+    }
+    &:visited {
+      color: $purple;
+    }
+  }
 }
 
 .app--light {

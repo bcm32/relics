@@ -53,9 +53,9 @@ export class GameClock {
                 + (this.gameState.researchState.betterShovels ? .5 : 0);
             newState.resourceState.relics += this.gameState.jobAssignments.gatherRelics*.5*this.tickRatio*relicsMultiplier;
         }
-        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*50*this.tickRatio) {
-            newState.resourceState.relics -= this.gameState.jobAssignments.gatherRelics*50*this.tickRatio;
-            newState.resourceState.knowledge += this.gameState.jobAssignments.gatherRelics*.5*this.tickRatio;
+        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*this.tickRatio) {
+            newState.resourceState.relics -= this.gameState.jobAssignments.gatherRelics*this.tickRatio;
+            newState.resourceState.knowledge += this.gameState.jobAssignments.gatherRelics*.1*this.tickRatio;
         }
         if(this.gameState.researchState.profiteering) {
             // Money accrual
