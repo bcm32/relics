@@ -1,3 +1,17 @@
+$knowledge-color: #803b7e;
+$blood-color: red;
+$money-color: gold;
+
+// Light
+$light-bg: #fff;
+$light-secondary: gray;
+$light-text: black;
+
+// Dark
+$dark-bg: #121212;
+$dark-secondary: gray;
+$dark-text: #fff;
+
 .app {
   transition: background-color 0.8s ease, color 0.8s ease;
   height: 100%;
@@ -16,15 +30,19 @@
 }
 
 .app--dark {
-  background: #121211;
-  color: white;
+  background: $dark-bg;
+  color: $dark-text;
 }
 
 .app--light {
-  background: whitesmoke;
-  color: black;
+  background: $light-bg;
+  color:  $light-text;
 }
 
+
+/****************
+  Panel Behaviors
+ ****************/
 .core-panel {
   padding-left: 4px;
   padding-right: 4px;
@@ -34,6 +52,8 @@
 
 .core-panel__left-column {
   width: 20vw;
+  border-right: 1px gray solid;
+  margin-right: 4px;
 }
 .core-panel__right-column {
   width: 20vw;
@@ -52,10 +72,16 @@
 .panel--right-align {
   text-align: right;
 }
-
 .panel--left-align {
   text-align: left;
 }
+.panel--center-align {
+  text-align: center;
+}
+
+/****************
+  Journal
+ ****************/
 .journal {
   overflow: hidden;
 
@@ -84,17 +110,65 @@
   &.journal__entry--achievement {
     color: fuchsia;
   }
+}
 
+.knowledge-button {
+  border-color: $knowledge-color !important;
+}
+
+.money-button {
+  border-color: $money-color !important;
+}
+
+.blood-button {
+  border-color: $blood-color !important;
 }
 
 .knowledge-text {
-  color: purple !important;
+  color: $knowledge-color !important;
+}
+
+.money-text {
+  color: $money-color !important;
 }
 
 .blood-text {
-  color: red !important;
+  color: $blood-color !important;
 }
 
+/**
+  Tooltips
+ */
+.relics-tooltip {
+  .relics-tooltip__description {
+    border-bottom: 1px solid gray;
+    text-align: center;
+    max-width: 240px;
+  }
+  .relics-tooltip__cost {
+
+  }
+}
+/****************
+  Achievements
+ ****************/
+.achievements__row {
+  .achievements__entry {
+    .achievements__entry--hidden {
+
+    }
+    .achievements__entry--unlocked {
+
+    }
+    .achievements__entry--hidden {
+
+    }
+  }
+}
+
+/****************
+  Components
+ ****************/
 .relics-button {
   border-radius: 4px;
   border: gray 1px solid;
@@ -139,6 +213,13 @@
 
 .button-container {
   padding: 8px 0;
+  margin: 4px 0;
+}
+
+.resources__container {
+  border: 1px solid gray;
+  padding: 4px;
+  margin: 8px;
 }
 
 .padded-text {
@@ -146,4 +227,8 @@
 }
 html, body, #root {
   height: 100%
+}
+
+.__react_component_tooltip.show {
+  opacity: 1 !important;
 }

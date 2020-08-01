@@ -19,7 +19,7 @@ export class GameClock {
         );
         this.gameState = gameState;
         this.updateState(gameState);
-        this.tickRatio = TICK_SPEED / 1000;
+        this.tickRatio = TICK_SPEED / 1000; // 50ms / 1000ms, multiply by how many per second you want
         this.maxTicks = (5 * 1000) / TICK_SPEED;
         this.emitTick = onTick;
     }
@@ -28,7 +28,17 @@ export class GameClock {
         // TODO: Tickcount, random event on tickcount
         var newState = {...this.gameState};
         if(this.gameState.jobAssignments.gatherRelics) {
-            newState.resourceState.relics += this.gameState.jobAssignments.gatherRelics*this.tickRatio;
+            const relicsMultiplier = 1
+                + (this.gameState.researchState.betterShovels ? .5 : 0);
+            newState.resourceState.relics += this.gameState.jobAssignments.gatherRelics*.5*this.tickRatio*relicsMultiplier;
+        }
+        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*50*this.tickRatio) {
+            newState.resourceState.relics -= this.gameState.jobAssignments.gatherRelics*50*this.tickRatio;
+            newState.resourceState.knowledge += this.gameState.jobAssignments.gatherRelics*.5*this.tickRatio;
+        }
+        if(this.gameState.researchState.profiteering) {
+            // Money accrual
+            this.gameState.resourceState.money += .25*this.tickRatio;
         }
 
         if(this.tickNumber >= this.maxTicks ) {

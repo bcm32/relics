@@ -7,6 +7,7 @@ export class GameState {
     saveTime: Date = new Date();
     settings: SettingsState = new SettingsState();
     achievements: Achievements = new Achievements();
+    researchState: ResearchState = new ResearchState();
 }
 
 export class ResourceState {
@@ -22,6 +23,7 @@ export class ResourceState {
 
 export class JobAssignments {
     gatherRelics: number = 0;
+    studyRelics: number = 0;
 }
 
 export class JournalState {
@@ -37,4 +39,24 @@ export class SettingsState {
 
 export class Achievements {
     labUnlocked: boolean = false;
+}
+
+export class ResearchState {
+    studentKnowledge: boolean = false;
+    profiteering: boolean = false;
+    betterShovels: boolean = false;
+    bloodWard: boolean = false;
+}
+
+export function mergeStateWithDefault(gameState: GameState): GameState {
+    const newState = {...new GameState(), ...gameState};
+    newState.resourceState = {...newState.resourceState, ...gameState.resourceState};
+    newState.jobAssignments = {...newState.jobAssignments, ...gameState.jobAssignments};
+    newState.journalState = {...newState.journalState, ...gameState.journalState};
+    newState.saveTime = gameState.saveTime;
+    newState.settings = {...newState.settings, ...gameState.settings};
+    newState.achievements = {...newState.achievements, ...gameState.achievements};
+    newState.researchState = {...newState.researchState, ...gameState.researchState};
+
+    return newState;
 }

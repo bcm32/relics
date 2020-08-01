@@ -1,4 +1,5 @@
-import {GameState} from "./game-state";
+import {GameState, mergeStateWithDefault} from "./game-state";
+import {addJournalEntry} from "./journal";
 
 export function saveGameExists() {
     return !!localStorage.getItem("RelicsSave");
@@ -7,16 +8,16 @@ export function saveGameExists() {
 export function loadSave() {
     const string = localStorage.getItem("RelicsSave");
     const save =  string ? JSON.parse(atob(string)) : null;
-    const merged = {...new GameState(), ...save};
-    return merged;
+    return mergeStateWithDefault(save);
 }
 
 export function newSave(): GameState {
     return new GameState();
 }
 
-export function saveGame(gameState: GameState) {
+export function saveGame(gameState: GameState, manualSave: boolean = false) {
     gameState.saveTime = new Date();
+    if(manualSave) addJournalEntry(gameState, "Game Saved");
     localStorage.setItem("RelicsSave", btoa(JSON.stringify(gameState)));
 }
 

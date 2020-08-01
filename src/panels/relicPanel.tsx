@@ -1,10 +1,9 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
-import {RelicGenerator} from "../economy/transactions/relicGenerator";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
 import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
-import {KnowledgeTransaction} from "../economy/transactions/KnowledgeTransaction";
+import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 
 type GeneratorProps = {
     gameState: GameState,
@@ -13,15 +12,13 @@ type GeneratorProps = {
 }
 
 export class RelicPanel extends React.Component<GeneratorProps> {
-    readonly studentTransaction = new StudentTransaction();
-
-    assignGather() {
+    assignGather(amount: number) {
         const { gameState } = this.props;
-        assignGatherers(1, gameState);
+        assignGatherers(amount, gameState);
     }
-    removeGather() {
+    removeGather(amount: number) {
         const { gameState } = this.props;
-        removeGatherers(1, gameState);
+        removeGatherers(amount, gameState);
     }
 
     render() {
@@ -35,33 +32,22 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                     <RelicsButton onClick={() => onAddCurrency("relics", 1)}>Look for relics</RelicsButton>
                 </div>
                 {studentsHired &&
-                    <div>
-                        <div>Students:</div>
-                        <div>
-                            Gathering Relics: {gameState.jobAssignments.gatherRelics}
-                            <span><RelicsButton
-                                compact={true}
-                                disabled={availableStudents <= 0}
-                                onClick={() => this.assignGather()}>+</RelicsButton>
-                            <RelicsButton
-                                compact={true}
-                                disabled={gameState.jobAssignments.gatherRelics <= 0}
-                                onClick={() => this.removeGather()}
-                            >
-                                -
-                            </RelicsButton></span>
-                        </div>
-                    </div>
+                    <AssignWorkerOptions
+                        assignWorkers={(amount: number) =>this.assignGather(amount)}
+                        removeWorkers={(amount:number) => this.removeGather(amount)}
+                        currentlyAssigned={gameState.jobAssignments.gatherRelics}
+                        availableWorkers={availableStudents}>
+                        Gathering Relics
+                    </AssignWorkerOptions>
                 }
                 <br/>
                 <div>
                     <div className="button-container">
                         <RelicsButton
-                                disabled={!this.studentTransaction.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, this.studentTransaction)}
+                                disabled={!StudentTransaction.isValidPurchase(gameState, 1)}
+                                onClick={() => onPurchase(1, StudentTransaction.commitTransaction)}
                                 id="hireStudent"
-                                tooltip={"Hire some students to dust off relics for you. They work for relics.\n"
-                                    + "Relics: " + this.studentTransaction.getCost(gameState, 1)}
+                                tooltip={StudentTransaction.buildTooltip(gameState)}
                         >
                             Hire a Student
                         </RelicsButton>

@@ -3,7 +3,6 @@ import {loadSave, newSave, saveGame, saveGameExists} from "./saveService";
 import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
-import {ITransaction} from "../economy/transactions/ITransaction";
 import {GameClock} from "./game-clock";
 import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
@@ -43,15 +42,15 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         this.setState({gameState: newState})
     }
 
-    makePurchase(purchaseAmount: number, purchaseType: ITransaction) {
+    makePurchase(purchaseAmount: number, transaction: any) {
         let newState = {...this.state.gameState};
-        newState = purchaseType.commitTransaction(newState, purchaseAmount);
+        newState = transaction(newState, purchaseAmount);
 
         this.setState({gameState: newState});
-        if(purchaseType.updateClock) {
-            // @ts-ignore
-            this.clock.updateState(newState);
-        }
+        // if(purchaseType.updateClock) {
+        //     // @ts-ignore
+        //     this.clock.updateState(newState);
+        // }
     }
 
     clearLog() {
@@ -65,7 +64,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     save() {
         const newState = {...this.state.gameState};
         this.setState({gameState: newState});
-        saveGame(newState);
+        saveGame(newState, true);
     }
 
     clearSave() {
@@ -95,7 +94,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                 activePanel = (
                     <ResearchLab
                         gameState={this.state.gameState}
-                        onPurchase={(purchaseAmount: number, purchaseType: ITransaction) => this.makePurchase(purchaseAmount, purchaseType)}
+                        onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
                 );
                 break;
@@ -105,7 +104,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                     <RelicPanel
                         gameState={this.state.gameState}
                         onAddCurrency={(currencyName: string, currencyAmount: number) => this.addCurrency(currencyName, currencyAmount)}
-                        onPurchase={(purchaseAmount: number, purchaseType: ITransaction) => this.makePurchase(purchaseAmount, purchaseType)}
+                        onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
                 );
         }
