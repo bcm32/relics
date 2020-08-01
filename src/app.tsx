@@ -2,7 +2,7 @@ import React from 'react';
 import './app.scss';
 import {CorePanel} from "./core/corePanel";
 import {ThemeContext, themes} from "./layout/theme-context";
-import {loadSave, newSave, saveGameExists} from "./core/saveService";
+import {loadSave, saveGameExists} from "./core/saveService";
 
 type AppProps = {}
 type AppState = {

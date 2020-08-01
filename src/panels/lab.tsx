@@ -3,17 +3,12 @@ import {GameState} from "../core/game-state";
 import {labFirstUnlock} from "../core/achievements";
 import {RelicsButton} from "../shared/relicsButton";
 import {KnowledgeTransaction} from "../economy/transactions/KnowledgeTransaction";
-import {StudentKnowledge} from "../economy/research/studentKnowledge";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {
     assignStudyRelics,
     countAvailableStudents,
     removeStudyRelics
 } from "../economy/jobAssignments";
-import ReactTooltip from "react-tooltip";
-import {Profit} from "../economy/research/profit";
-import {BetterShovels} from "../economy/research/betterShovels";
-import {BloodWard} from "../economy/research/bloodWard";
 import {getAvailableResearches} from "../economy/researchManager";
 import {ResearchButton} from "../shared/researchButton";
 import {Research} from "../economy/Transaction";

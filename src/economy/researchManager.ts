@@ -1,5 +1,5 @@
 import {GameState} from "../core/game-state";
-import {Research, Transaction} from "./Transaction";
+import {Research} from "./Transaction";
 import {BetterShovels} from "./research/betterShovels";
 import {BloodWard} from "./research/bloodWard";
 import {Profit} from "./research/profit";
