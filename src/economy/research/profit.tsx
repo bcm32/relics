@@ -1,9 +1,9 @@
-import {Transaction} from "../Transaction";
+import {Research} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import {ACHIEVEMENT_ENTRY_TYPE, addDetailedJournalEntry} from "../../core/journal";
 import React from "react";
 
-export class Profit extends Transaction {
+export class Profit extends Research {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
@@ -35,4 +35,12 @@ export class Profit extends Transaction {
             </div>
         );
     }
+
+    static isAvailable(gameState: GameState): boolean {
+        return gameState.researchState.studentKnowledge && !gameState.researchState.profiteering;
+    }
+
+    static title = "Procure Funding";
+    static id = "profiteering";
+    static className = "money-button";
 }

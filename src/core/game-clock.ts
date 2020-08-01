@@ -48,19 +48,36 @@ export class GameClock {
 
         // Resource Management
         var newState = {...this.gameState};
+
+        // Stats
+        let relicsPerSecond = 0;
+        let knowledgePerSecond = 0;
+        let moneyPerSecond = 0
+
         if(this.gameState.jobAssignments.gatherRelics) {
             const relicsMultiplier = 1
                 + (this.gameState.researchState.betterShovels ? .5 : 0);
-            newState.resourceState.relics += this.gameState.jobAssignments.gatherRelics*.5*this.tickRatio*relicsMultiplier;
+            relicsPerSecond = this.gameState.jobAssignments.gatherRelics*.5*relicsMultiplier;
+            newState.resourceState.relics += relicsPerSecond*this.tickRatio;
         }
-        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*this.tickRatio) {
-            newState.resourceState.relics -= this.gameState.jobAssignments.gatherRelics*this.tickRatio;
-            newState.resourceState.knowledge += this.gameState.jobAssignments.gatherRelics*.1*this.tickRatio;
+        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*10*this.tickRatio) {
+            const relicConsumptionRate = this.gameState.jobAssignments.studyRelics*10;
+            relicsPerSecond -= relicConsumptionRate;
+            newState.resourceState.relics -= relicConsumptionRate*this.tickRatio;
+            const knowRate = this.gameState.jobAssignments.studyRelics*.1;
+            newState.resourceState.knowledge += knowRate*this.tickRatio;
+            knowledgePerSecond += knowRate;
         }
         if(this.gameState.researchState.profiteering) {
             // Money accrual
             this.gameState.resourceState.money += .25*this.tickRatio;
+            moneyPerSecond = .25;
         }
+
+        // Aggregate stats
+        newState.resourceState.relicRate = relicsPerSecond;
+        newState.resourceState.moneyRate = moneyPerSecond;
+        newState.resourceState.knowledgeRate = knowledgePerSecond;
 
         // Kick off any events that have transpired
         this.manageRandomEvent(newState);

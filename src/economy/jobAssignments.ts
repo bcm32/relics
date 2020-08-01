@@ -15,7 +15,6 @@ export function removeGatherers(amount: number, gameState: GameState){
 
 export function assignStudyRelics(amount: number, gameState: GameState){
     // Cache available in the future?
-    console.log(gameState)
     if(countAvailableStudents(gameState) >= amount) {
         gameState.jobAssignments.studyRelics += amount;
     }

@@ -31,7 +31,7 @@ export function randomEvent(gameState: GameState) {
             gameState.resourceState.students -= 1;
 
             addDetailedJournalEntry(gameState, {
-                entry: "You are short one student.",
+                entry: "A shout in the dark. You are short one student.",
                 entryType: BLOOD_ENTRY_TYPE,
             });
         } else {

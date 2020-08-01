@@ -1,9 +1,9 @@
-import {Transaction } from "../Transaction";
+import {Research} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import {ACHIEVEMENT_ENTRY_TYPE, addDetailedJournalEntry} from "../../core/journal";
 import React from "react";
 
-export class BetterShovels extends Transaction {
+export class BetterShovels extends Research {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
@@ -34,4 +34,12 @@ export class BetterShovels extends Transaction {
             </div>
         );
     }
+
+    static isAvailable(gameState: GameState): boolean {
+        return gameState.researchState.profiteering && !gameState.researchState.betterShovels;
+    }
+
+    static title = "Better Shovels";
+    static id = "better-shovels";
+    static className = "money-button";
 }

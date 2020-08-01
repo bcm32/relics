@@ -12,8 +12,10 @@ $dark-blue: #66D9EF;
 $purple: #AE81FF;
 
 $knowledge-color: $purple;
-$blood-color: #F92672;
+$blood-color: #f93140;
 $money-color: #E6DB74;
+$pink: #F92672;
+
 
 .app {
   transition: background-color 0.8s ease, color 0.8s ease;
@@ -234,6 +236,13 @@ $money-color: #E6DB74;
   margin: 8px;
 }
 
+.resources__entry {
+  display: flex;
+  justify-content: space-between;
+}
+.resources__rate {
+  color: $dark-gray
+}
 .padded-text {
   padding-top: 4px;
 }

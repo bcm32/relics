@@ -1,9 +1,9 @@
 import React from "react";
-import {Transaction} from "../Transaction";
+import {Research} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import {addDetailedJournalEntry, BLOOD_ENTRY_TYPE} from "../../core/journal";
 
-export class BloodWard extends Transaction {
+export class BloodWard extends Research {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
@@ -39,4 +39,12 @@ export class BloodWard extends Transaction {
             </div>
         );
     }
+
+    static isAvailable(gameState: GameState): boolean {
+        return gameState.researchState.profiteering && !gameState.researchState.bloodWard;
+    }
+
+    static title = "Inscribe a ward";
+    static id = "blood-ward";
+    static className = "blood-button";
 }

@@ -3,7 +3,7 @@ import {GameState} from "../core/game-state";
 import {labFirstUnlock} from "../core/achievements";
 import {RelicsButton} from "../shared/relicsButton";
 import {KnowledgeTransaction} from "../economy/transactions/KnowledgeTransaction";
-import {StudentKnowledge} from "../economy/researches/studentKnowledge";
+import {StudentKnowledge} from "../economy/research/studentKnowledge";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {
     assignStudyRelics,
@@ -11,9 +11,12 @@ import {
     removeStudyRelics
 } from "../economy/jobAssignments";
 import ReactTooltip from "react-tooltip";
-import {Profit} from "../economy/researches/profit";
-import {BetterShovels} from "../economy/researches/betterShovels";
-import {BloodWard} from "../economy/researches/bloodWard";
+import {Profit} from "../economy/research/profit";
+import {BetterShovels} from "../economy/research/betterShovels";
+import {BloodWard} from "../economy/research/bloodWard";
+import {getAvailableResearches} from "../economy/researchManager";
+import {ResearchButton} from "../shared/researchButton";
+import {Research} from "../economy/Transaction";
 
 type LabProps = {
     gameState: GameState;
@@ -28,9 +31,17 @@ export class ResearchLab extends React.Component<LabProps> {
     assignStudentsStudy = (amount: number) => assignStudyRelics(amount, this.props.gameState);
     removeStudentsStudy = (amount: number) => removeStudyRelics(amount, this.props.gameState);
 
+    createResearchButton(research: typeof Research): any {
+        return (
+            <ResearchButton key={research.id} research={research} gameState={this.props.gameState} onPurchase={this.props.onPurchase}/>
+        );
+    }
+
     render() {
         const { gameState, onPurchase } = this.props;
         const availableStudents = countAvailableStudents(gameState);
+        const availableResearch = getAvailableResearches(gameState).map((research) => this.createResearchButton(research));
+
         return (
             <div>
                 <div className="button-container">
@@ -60,50 +71,7 @@ export class ResearchLab extends React.Component<LabProps> {
 
                 <div>
                     <p>Research</p>
-                    {!gameState.researchState.studentKnowledge && (
-                            <RelicsButton
-                                disabled={!StudentKnowledge.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, StudentKnowledge.commitTransaction)}
-                                id="researchStudyRelics"
-                                className={"knowledge-button"}
-                                tooltip={StudentKnowledge.buildTooltip(gameState)}
-                            >
-                                Studious Students
-                            </RelicsButton>
-                    )}
-                    {(gameState.researchState.studentKnowledge && !gameState.researchState.profiteering) && (
-                        <RelicsButton
-                            disabled={!Profit.isValidPurchase(gameState, 1)}
-                            onClick={() => onPurchase(1, Profit.commitTransaction)}
-                            id="profiteering"
-                            className={"knowledge-button"}
-                            tooltip={Profit.buildTooltip(gameState)}
-                        >
-                            Procure Funding
-                        </RelicsButton>
-                    )}
-                    {(gameState.researchState.profiteering && !gameState.researchState.betterShovels) && (
-                        <RelicsButton
-                            disabled={!BetterShovels.isValidPurchase(gameState, 1)}
-                            onClick={() => onPurchase(1, BetterShovels.commitTransaction)}
-                            id="shovel1"
-                            className={"money-button"}
-                            tooltip={BetterShovels.buildTooltip(gameState)}
-                        >
-                            Better Shovels
-                        </RelicsButton>
-                    )}
-                    {(gameState.researchState.profiteering && !gameState.researchState.bloodWard) && (
-                        <RelicsButton
-                            disabled={!BloodWard.isValidPurchase(gameState, 1)}
-                            onClick={() => onPurchase(1, BloodWard.commitTransaction)}
-                            id="blood-ward"
-                            className={"blood-button"}
-                            tooltip={BloodWard.buildTooltip(gameState)}
-                        >
-                            Inscribe a ward
-                        </RelicsButton>
-                    )}
+                    { availableResearch }
                 </div>
             </div>
         );

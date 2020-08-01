@@ -1,8 +1,8 @@
-import { Transaction } from "../Transaction";
+import {Research} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import React from "react";
 
-export class StudentKnowledge extends Transaction {
+export class StudentKnowledge extends Research {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
@@ -29,4 +29,11 @@ export class StudentKnowledge extends Transaction {
             </div>
         );
     }
+    static isAvailable(gameState: GameState): boolean {
+        return !gameState.researchState.studentKnowledge;
+    }
+
+    static title = "Studious Students";
+    static id = "student-knowledge";
+    static className = "knowledge-button";
 }
