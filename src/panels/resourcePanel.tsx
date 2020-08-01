@@ -1,6 +1,5 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
-import {RelicGenerator} from "../economy/transactions/relicGenerator";
 import {countAvailableStudents} from "../economy/jobAssignments";
 
 type ResourceProps = {

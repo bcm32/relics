@@ -1,10 +1,8 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
-import {RelicGenerator} from "../economy/transactions/relicGenerator";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
 import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
-import {KnowledgeTransaction} from "../economy/transactions/KnowledgeTransaction";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 
 type GeneratorProps = {
@@ -14,8 +12,6 @@ type GeneratorProps = {
 }
 
 export class RelicPanel extends React.Component<GeneratorProps> {
-    readonly studentTransaction = new StudentTransaction();
-
     assignGather(amount: number) {
         const { gameState } = this.props;
         assignGatherers(amount, gameState);
@@ -48,11 +44,10 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                 <div>
                     <div className="button-container">
                         <RelicsButton
-                                disabled={!this.studentTransaction.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, this.studentTransaction)}
+                                disabled={!StudentTransaction.isValidPurchase(gameState, 1)}
+                                onClick={() => onPurchase(1, StudentTransaction.commitTransaction)}
                                 id="hireStudent"
-                                tooltip={"Hire some students to dust off relics for you. They work for relics.\n"
-                                    + "Relics: " + this.studentTransaction.getCost(gameState, 1)}
+                                tooltip={StudentTransaction.buildTooltip(gameState)}
                         >
                             Hire a Student
                         </RelicsButton>

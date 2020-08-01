@@ -13,20 +13,28 @@ export function randomEvent(gameState: GameState) {
     }
     if(diceRoll === 1 && gameState.resourceState.students > 2) {
         // A dark event occurs
-        if(countAvailableStudents(gameState) <= 0) {
-            if(gameState.jobAssignments.gatherRelics >= 1) {
-                removeGatherers(1, gameState);
-            } else if (gameState.jobAssignments.studyRelics >= 1) {
-                removeStudyRelics(1, gameState);
+        if(!gameState.researchState.bloodWard) {
+            if (countAvailableStudents(gameState) <= 0) {
+                if (gameState.jobAssignments.gatherRelics >= 1) {
+                    removeGatherers(1, gameState);
+                } else if (gameState.jobAssignments.studyRelics >= 1) {
+                    removeStudyRelics(1, gameState);
+                }
             }
-        }
-        gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
-        gameState.resourceState.students -= 1;
+            gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
+            gameState.resourceState.students -= 1;
 
-        addDetailedJournalEntry(gameState, {
-            entry: "You are short one student.",
-            entryType: BLOOD_ENTRY_TYPE,
-        });
+            addDetailedJournalEntry(gameState, {
+                entry: "You are short one student.",
+                entryType: BLOOD_ENTRY_TYPE,
+            });
+        } else {
+            gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
+            addDetailedJournalEntry(gameState, {
+                entry: "The ward protects the student in exchange for a drop shed.",
+                entryType: BLOOD_ENTRY_TYPE,
+            });
+        }
     }
 }
 

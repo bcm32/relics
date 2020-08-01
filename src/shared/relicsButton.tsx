@@ -5,7 +5,7 @@ type RelicsButtonProps = {
   onClick: any;
   id?: string; // Must be provided for tooltip to work
   disabled?: any;
-  tooltip?: string;
+  tooltip?: any;
   compact?: boolean;
   className?: string;
 }

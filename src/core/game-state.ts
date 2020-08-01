@@ -45,6 +45,7 @@ export class ResearchState {
     studentKnowledge: boolean = false;
     profiteering: boolean = false;
     betterShovels: boolean = false;
+    bloodWard: boolean = false;
 }
 
 export function mergeStateWithDefault(gameState: GameState): GameState {

@@ -13,6 +13,7 @@ import {
 import ReactTooltip from "react-tooltip";
 import {Profit} from "../economy/researches/profit";
 import {BetterShovels} from "../economy/researches/betterShovels";
+import {BloodWard} from "../economy/researches/bloodWard";
 
 type LabProps = {
     gameState: GameState;
@@ -20,12 +21,6 @@ type LabProps = {
 }
 
 export class ResearchLab extends React.Component<LabProps> {
-    readonly knowledgeTransaction = new KnowledgeTransaction();
-    readonly studentKnowledge = new StudentKnowledge();
-    readonly profiteering = new Profit();
-    readonly betterShovels = new BetterShovels();
-
-
     componentDidMount(): void {
         labFirstUnlock(this.props.gameState);
     }
@@ -40,11 +35,10 @@ export class ResearchLab extends React.Component<LabProps> {
             <div>
                 <div className="button-container">
                     <RelicsButton
-                        disabled={!this.knowledgeTransaction.isValidPurchase(gameState, 1)}
-                        onClick={() => onPurchase(1, this.knowledgeTransaction)}
+                        disabled={!KnowledgeTransaction.isValidPurchase(gameState, 1)}
+                        onClick={() => onPurchase(1, KnowledgeTransaction.commitTransaction)}
                         id="studyRelics"
-                        tooltip={"Peruse your collection, perhaps you can find something useful.\n"
-                        + "Relics: " + this.knowledgeTransaction.getCost(gameState, 1)}
+                        tooltip={KnowledgeTransaction.buildTooltip(gameState)}
                     >
                         Study Relics
                     </RelicsButton>
@@ -68,38 +62,46 @@ export class ResearchLab extends React.Component<LabProps> {
                     <p>Research</p>
                     {!gameState.researchState.studentKnowledge && (
                             <RelicsButton
-                                disabled={!this.studentKnowledge.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, this.studentKnowledge)}
+                                disabled={!StudentKnowledge.isValidPurchase(gameState, 1)}
+                                onClick={() => onPurchase(1, StudentKnowledge.commitTransaction)}
                                 id="researchStudyRelics"
                                 className={"knowledge-button"}
-                                tooltip={"I know enough about this to teach others to do the work, albeit at a reduced efficiency.\n"
-                                    + "Knowledge: 10"}
+                                tooltip={StudentKnowledge.buildTooltip(gameState)}
                             >
                                 Studious Students
                             </RelicsButton>
                     )}
                     {(gameState.researchState.studentKnowledge && !gameState.researchState.profiteering) && (
                         <RelicsButton
-                            disabled={!this.profiteering.isValidPurchase(gameState, 1)}
-                            onClick={() => onPurchase(1, this.profiteering)}
+                            disabled={!Profit.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, Profit.commitTransaction)}
                             id="profiteering"
                             className={"knowledge-button"}
-                            tooltip={"With your student's help, you know enough now to fund this endeavor. A little embellishment never hurt..\n"
-                            + "Knowledge: 20"}
+                            tooltip={Profit.buildTooltip(gameState)}
                         >
                             Procure Funding
                         </RelicsButton>
                     )}
                     {(gameState.researchState.profiteering && !gameState.researchState.betterShovels) && (
                         <RelicsButton
-                            disabled={!this.betterShovels.isValidPurchase(gameState, 1)}
-                            onClick={() => onPurchase(1, this.betterShovels)}
+                            disabled={!BetterShovels.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, BetterShovels.commitTransaction)}
                             id="shovel1"
                             className={"money-button"}
-                            tooltip={"Buy the team their very first shovel. It's better than none.\n"
-                            + "Money: 50"}
+                            tooltip={BetterShovels.buildTooltip(gameState)}
                         >
                             Better Shovels
+                        </RelicsButton>
+                    )}
+                    {(gameState.researchState.profiteering && !gameState.researchState.bloodWard) && (
+                        <RelicsButton
+                            disabled={!BloodWard.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, BloodWard.commitTransaction)}
+                            id="blood-ward"
+                            className={"blood-button"}
+                            tooltip={BloodWard.buildTooltip(gameState)}
+                        >
+                            Inscribe a ward
                         </RelicsButton>
                     )}
                 </div>

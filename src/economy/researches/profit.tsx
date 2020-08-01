@@ -1,12 +1,12 @@
-import {ITransaction } from "../ITransaction";
+import {Transaction} from "../Transaction";
 import {GameState} from "../../core/game-state";
 import {ACHIEVEMENT_ENTRY_TYPE, addDetailedJournalEntry} from "../../core/journal";
 
-export class Profit implements ITransaction {
-    updateClock = false;
+export class Profit extends Transaction {
+    static updateClock = false;
 
-    commitTransaction(gameState: GameState, amount: number): GameState {
-        if(this.isValidPurchase(gameState, amount)) {
+    static commitTransaction(gameState: GameState, amount: number): GameState {
+        if(Profit.isValidPurchase(gameState, amount)) {
             gameState.resourceState.knowledge -= 20;
             gameState.researchState.profiteering = true;
             addDetailedJournalEntry(gameState, {
@@ -17,7 +17,7 @@ export class Profit implements ITransaction {
         return gameState;
     }
 
-    isValidPurchase(gameState: GameState, amount: number): boolean {
+    static isValidPurchase(gameState: GameState, amount: number): boolean {
         return gameState.resourceState.knowledge >= 20;
     }
 }
