@@ -1,7 +1,13 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
-import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
+import {
+    assignGatherers,
+    assignGiftShop,
+    countAvailableStudents,
+    removeGatherers,
+    removeGiftShop
+} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {ShedTransaction} from "../economy/transactions/shedTransaction";
@@ -13,14 +19,6 @@ type GeneratorProps = {
 }
 
 export class RelicPanel extends React.Component<GeneratorProps> {
-    assignGather(amount: number) {
-        const { gameState } = this.props;
-        assignGatherers(amount, gameState);
-    }
-    removeGather(amount: number) {
-        const { gameState } = this.props;
-        removeGatherers(amount, gameState);
-    }
 
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;
@@ -34,12 +32,23 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                 </div>
                 {studentsHired &&
                     <AssignWorkerOptions
-                        assignWorkers={(amount: number) =>this.assignGather(amount)}
-                        removeWorkers={(amount:number) => this.removeGather(amount)}
+                        assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
+                        removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
                         currentlyAssigned={gameState.jobAssignments.gatherRelics}
                         availableWorkers={availableStudents}>
                         Gathering Relics
                     </AssignWorkerOptions>
+                }
+                {gameState.researchState.tours &&
+                    <div>
+                        <AssignWorkerOptions
+                            assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
+                            removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
+                            currentlyAssigned={gameState.jobAssignments.giftShop}
+                            availableWorkers={availableStudents}>
+                            Gift Shop
+                        </AssignWorkerOptions>
+                    </div>
                 }
                 <br/>
                 <div>
@@ -53,18 +62,16 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                             Hire a Student
                         </RelicsButton>
                     </div>
+                    {gameState.researchState.profiteering && <p>Buildings:</p> }
                     {gameState.researchState.profiteering &&
-                        <div>
-                            <p>Buildings:</p>
-                            <RelicsButton
-                                disabled={!ShedTransaction.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, ShedTransaction.commitTransaction)}
-                                id="shed"
-                                tooltip={ShedTransaction.buildTooltip(gameState)}
-                            >
-                                Storage Shed: {gameState.resourceState.sheds}
-                            </RelicsButton>
-                        </div>
+                        <RelicsButton
+                            disabled={!ShedTransaction.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, ShedTransaction.commitTransaction)}
+                            id="shed"
+                            tooltip={ShedTransaction.buildTooltip(gameState)}
+                        >
+                            Storage Shed: {gameState.resourceState.sheds}
+                        </RelicsButton>
                     }
                 </div>
             </div>

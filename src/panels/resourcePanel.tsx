@@ -16,6 +16,8 @@ export class ResourcePanelEntry extends React.Component<ResourcePanelEntryProps>
     render() {
         const renderRate = this.props.rate !== undefined && this.props.rate !== 0;
         const rateText = this.props.rate + "/s";
+        const renderCap = this.props.cap !== undefined && this.props.cap !== 0;
+
         return (
             <div className="resources__entry">
                 <div className={this.props.className}>

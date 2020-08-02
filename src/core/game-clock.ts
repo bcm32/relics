@@ -45,34 +45,36 @@ export class GameClock {
 
     tick() {
         this.calibrate();
+        const newState = {...this.gameState};
 
-        var newState = {...this.gameState};
-
-        // Stats
+        // Rates & Stats
         let relicsPerSecond = 0;
         let knowledgePerSecond = 0;
-        let moneyPerSecond = 0
+        let moneyPerSecond = 0;
 
-        // Resource Management
+        // Calculate rates and side effects
         if(this.gameState.jobAssignments.gatherRelics) {
             const relicsMultiplier = 1
                 + (this.gameState.researchState.betterShovels ? .5 : 0);
             relicsPerSecond = this.gameState.jobAssignments.gatherRelics*.5*relicsMultiplier;
-            newState.resourceState.relics += relicsPerSecond*this.tickRatio;
         }
         if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*10*this.tickRatio) {
             const relicConsumptionRate = this.gameState.jobAssignments.studyRelics*10;
             relicsPerSecond -= relicConsumptionRate;
-            newState.resourceState.relics -= relicConsumptionRate*this.tickRatio;
-            const knowRate = this.gameState.jobAssignments.studyRelics*.1;
-            newState.resourceState.knowledge += knowRate*this.tickRatio;
-            knowledgePerSecond += knowRate;
+            knowledgePerSecond = this.gameState.jobAssignments.studyRelics*.1;
         }
         if(this.gameState.researchState.profiteering) {
-            // Money accrual
-            this.gameState.resourceState.money += .25*this.tickRatio;
             moneyPerSecond = .25;
+            if(this.gameState.jobAssignments.giftShop) {
+                moneyPerSecond += this.gameState.jobAssignments.giftShop*.125;
+                relicsPerSecond -= this.gameState.jobAssignments.giftShop*2.5;
+            }
         }
+
+        // Apply rates to resources
+        newState.resourceState.money     += moneyPerSecond      *this.tickRatio;
+        newState.resourceState.relics    += relicsPerSecond     *this.tickRatio;
+        newState.resourceState.knowledge += knowledgePerSecond  *this.tickRatio;
 
         // Apply caps
         const relicCap = BASE_RELIC_CAP + this.gameState.resourceState.sheds*50;
@@ -84,8 +86,8 @@ export class GameClock {
         newState.resourceState.moneyCap = BASE_MONEY_CAP;
 
         // Aggregate stats
-        newState.resourceState.relicRate = relicsPerSecond;
-        newState.resourceState.moneyRate = moneyPerSecond;
+        newState.resourceState.relicRate     = relicsPerSecond;
+        newState.resourceState.moneyRate     = moneyPerSecond;
         newState.resourceState.knowledgeRate = knowledgePerSecond;
 
         // Kick off any events that have transpired
