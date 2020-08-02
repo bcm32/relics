@@ -8,6 +8,7 @@ type ResourceProps = {
 
 type ResourcePanelEntryProps = {
     rate?: number;
+    cap?: number;
     className?: string;
 }
 
@@ -17,7 +18,12 @@ export class ResourcePanelEntry extends React.Component<ResourcePanelEntryProps>
         const rateText = this.props.rate + "/s";
         return (
             <div className="resources__entry">
-                <div className={this.props.className}>{this.props.children}</div>
+                <div className={this.props.className}>
+                    {this.props.children}
+                    {this.props.cap && (
+                        <span className="resources__rate">/{this.props.cap}</span>
+                    )}
+                </div>
                 <div className="resources__rate">{renderRate && rateText}</div>
             </div>
         );
@@ -31,11 +37,13 @@ export class ResourcePanel extends React.Component<ResourceProps> {
             <div>
                 <div className="panel--center-align resources__container">
                     {!!gameState.resourceState.relics &&
-                        <ResourcePanelEntry rate={gameState.resourceState.relicRate}>
+                        <ResourcePanelEntry rate={gameState.resourceState.relicRate}
+                                            cap={gameState.resourceState.relicCap}>
                             Relics: {gameState.resourceState.relics.toFixed()}
                         </ResourcePanelEntry>}
                     {gameState.researchState.profiteering &&
-                        <ResourcePanelEntry className="money-text" rate={gameState.resourceState.moneyRate}>
+                        <ResourcePanelEntry className="money-text" rate={gameState.resourceState.moneyRate}
+                                            cap={gameState.resourceState.moneyCap}>
                             Money: {gameState.resourceState.money.toFixed()}
                         </ResourcePanelEntry>}
                     {!!gameState.resourceState.knowledge &&

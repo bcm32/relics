@@ -1,6 +1,6 @@
 import {saveGame} from "./saveService";
 import {GameState} from "./game-state";
-import {TICK_SPEED, SECONDS_PER_EVENT_CHECK} from "../config/constants";
+import {TICK_SPEED, SECONDS_PER_EVENT_CHECK, BASE_RELIC_CAP, BASE_MONEY_CAP} from "../config/constants";
 import {randomEventsForDuration} from "./event-manager";
 
 export class GameClock {
@@ -46,7 +46,6 @@ export class GameClock {
     tick() {
         this.calibrate();
 
-        // Resource Management
         var newState = {...this.gameState};
 
         // Stats
@@ -54,6 +53,7 @@ export class GameClock {
         let knowledgePerSecond = 0;
         let moneyPerSecond = 0
 
+        // Resource Management
         if(this.gameState.jobAssignments.gatherRelics) {
             const relicsMultiplier = 1
                 + (this.gameState.researchState.betterShovels ? .5 : 0);
@@ -73,6 +73,15 @@ export class GameClock {
             this.gameState.resourceState.money += .25*this.tickRatio;
             moneyPerSecond = .25;
         }
+
+        // Apply caps
+        const relicCap = BASE_RELIC_CAP + this.gameState.resourceState.sheds*50;
+        if(newState.resourceState.relics >= relicCap) newState.resourceState.relics = relicCap;
+        newState.resourceState.relicCap = relicCap;
+
+        const moneyCap = BASE_MONEY_CAP;
+        if(newState.resourceState.money >= moneyCap) newState.resourceState.money = moneyCap;
+        newState.resourceState.moneyCap = BASE_MONEY_CAP;
 
         // Aggregate stats
         newState.resourceState.relicRate = relicsPerSecond;

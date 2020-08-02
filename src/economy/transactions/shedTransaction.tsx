@@ -2,30 +2,29 @@ import { Transaction } from "../Transaction";
 import {GameState} from "../../core/game-state";
 import React from "react";
 
-export class StudentTransaction extends Transaction{
+export class ShedTransaction extends Transaction{
     updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
-        if(StudentTransaction.isValidPurchase(gameState, amount)) {
-            const currCost = StudentTransaction.getCost(gameState, amount);
+        if(ShedTransaction.isValidPurchase(gameState, amount)) {
+            const currCost = ShedTransaction.getCost(gameState, amount);
 
-            gameState.resourceState.relics -= currCost;
-            gameState.resourceState.students += amount;
+            gameState.resourceState.money -= currCost;
+            gameState.resourceState.sheds += amount;
         }
         return gameState;
     }
 
     static isValidPurchase(gameState: GameState, amount: number): boolean {
-        const currCost = StudentTransaction.getCost(gameState, amount);
-
-        return gameState.resourceState.relics >= currCost;
+        const currCost = ShedTransaction.getCost(gameState, amount);
+        return gameState.resourceState.money >= currCost;
     }
 
     static getCost(gameState: GameState, purchaseAmount: number) {
         let sum = 0;
-        let theoreticalAmt = gameState.resourceState.students || 0;
+        let theoreticalAmt = gameState.resourceState.sheds || 0;
         for (let i = 0; i < purchaseAmount; i++) {
-            sum += 10 + theoreticalAmt * 5;
+            sum += 5 + theoreticalAmt * 15;
             theoreticalAmt++;
         }
         return sum;
@@ -35,11 +34,10 @@ export class StudentTransaction extends Transaction{
         return (
             <div className="relics-tooltip">
                 <div className="relics-tooltip__description">
-                    Hire some students to dust off relics for you.
-                    They work for relics.
+                    It turns out we don't need to keep our relics in a pile under a tarp.
                 </div>
                 <div className="relics-tooltip__cost">
-                    <div>Relics: {StudentTransaction.getCost(gameState, 1)}</div>
+                    <div className={"money-text"}>Money: {ShedTransaction.getCost(gameState, 1)}</div>
                 </div>
             </div>
         );

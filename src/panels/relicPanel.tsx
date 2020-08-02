@@ -4,6 +4,7 @@ import {StudentTransaction} from "../economy/transactions/studentTransaction";
 import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
+import {ShedTransaction} from "../economy/transactions/shedTransaction";
 
 type GeneratorProps = {
     gameState: GameState,
@@ -52,6 +53,19 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                             Hire a Student
                         </RelicsButton>
                     </div>
+                    {gameState.researchState.profiteering &&
+                        <div>
+                            <p>Buildings:</p>
+                            <RelicsButton
+                                disabled={!ShedTransaction.isValidPurchase(gameState, 1)}
+                                onClick={() => onPurchase(1, ShedTransaction.commitTransaction)}
+                                id="shed"
+                                tooltip={ShedTransaction.buildTooltip(gameState)}
+                            >
+                                Storage Shed: {gameState.resourceState.sheds}
+                            </RelicsButton>
+                        </div>
+                    }
                 </div>
             </div>
         );

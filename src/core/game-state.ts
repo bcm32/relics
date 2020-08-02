@@ -12,8 +12,10 @@ export class GameState {
 
 export class ResourceState {
     relics: number = 0;
+    relicCap: number = 0;
     relicRate: number = 0;
     relicGenerator: number = 0;
+    sheds: number = 0;
     students: number = 0;
     knowledge: number = 0;
     knowledgeRate: number = 0;
@@ -21,6 +23,7 @@ export class ResourceState {
     bloodRate = 0;
     money: number = 0;
     moneyRate = 0;
+    moneyCap = 0;
     fame: number = 0;
     whispers: number = 0;
 }
