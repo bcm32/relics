@@ -41,6 +41,18 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                         Gathering Relics
                     </AssignWorkerOptions>
                 }
+                {gameState.researchState.tours &&
+                    <div>
+                        THIS NEEDS FIXING
+                        <AssignWorkerOptions
+                            assignWorkers={(amount: number) =>this.assignGather(amount)}
+                            removeWorkers={(amount:number) => this.removeGather(amount)}
+                            currentlyAssigned={gameState.jobAssignments.gatherRelics}
+                            availableWorkers={availableStudents}>
+                            Gift Shop
+                        </AssignWorkerOptions>
+                    </div>
+                }
                 <br/>
                 <div>
                     <div className="button-container">
@@ -53,18 +65,16 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                             Hire a Student
                         </RelicsButton>
                     </div>
+                    {gameState.researchState.profiteering && <p>Buildings:</p> }
                     {gameState.researchState.profiteering &&
-                        <div>
-                            <p>Buildings:</p>
-                            <RelicsButton
-                                disabled={!ShedTransaction.isValidPurchase(gameState, 1)}
-                                onClick={() => onPurchase(1, ShedTransaction.commitTransaction)}
-                                id="shed"
-                                tooltip={ShedTransaction.buildTooltip(gameState)}
-                            >
-                                Storage Shed: {gameState.resourceState.sheds}
-                            </RelicsButton>
-                        </div>
+                        <RelicsButton
+                            disabled={!ShedTransaction.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, ShedTransaction.commitTransaction)}
+                            id="shed"
+                            tooltip={ShedTransaction.buildTooltip(gameState)}
+                        >
+                            Storage Shed: {gameState.resourceState.sheds}
+                        </RelicsButton>
                     }
                 </div>
             </div>

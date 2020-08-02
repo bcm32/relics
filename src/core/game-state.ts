@@ -54,6 +54,7 @@ export class ResearchState {
     betterShovels: boolean = false;
     bloodWard: boolean = false;
     mapTheGrounds: boolean = false;
+    tours: boolean = true;
 }
 
 export function mergeStateWithDefault(gameState: GameState): GameState {

@@ -5,13 +5,15 @@ import {BloodWard} from "./research/bloodWard";
 import {Profit} from "./research/profit";
 import {StudentKnowledge} from "./research/studentKnowledge";
 import {MapTheRuins} from "./research/mapTheRuins";
+import {Tours} from "./research/tours";
 
 export const allResearches: typeof Research[] = [
     BetterShovels,
     BloodWard,
     Profit,
     StudentKnowledge,
-    MapTheRuins
+    MapTheRuins,
+    Tours
 ];
 
 export function getAvailableResearches(gameState: GameState): typeof Research[] {

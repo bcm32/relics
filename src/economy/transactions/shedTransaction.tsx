@@ -35,6 +35,7 @@ export class ShedTransaction extends Transaction{
             <div className="relics-tooltip">
                 <div className="relics-tooltip__description">
                     It turns out we don't need to keep our relics in a pile under a tarp.
+                    <br/>+50 relic storage.
                 </div>
                 <div className="relics-tooltip__cost">
                     <div className={"money-text"}>Money: {ShedTransaction.getCost(gameState, 1)}</div>

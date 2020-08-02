@@ -11,7 +11,7 @@ export class Profit extends Research {
             gameState.resourceState.knowledge -= 10;
             gameState.researchState.profiteering = true;
             addDetailedJournalEntry(gameState, {
-                entry: "A patron finds your work interesting, and provides a slow but steady drip of funding. Relic speed x 1.5.",
+                entry: "A patron finds your work interesting, and provides a slow but steady drip of funding.",
                 entryType: ACHIEVEMENT_ENTRY_TYPE
             });
         }
