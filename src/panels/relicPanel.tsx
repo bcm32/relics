@@ -1,7 +1,13 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
 import {StudentTransaction} from "../economy/transactions/studentTransaction";
-import {assignGatherers, countAvailableStudents, removeGatherers} from "../economy/jobAssignments";
+import {
+    assignGatherers,
+    assignGiftShop,
+    countAvailableStudents,
+    removeGatherers,
+    removeGiftShop
+} from "../economy/jobAssignments";
 import {RelicsButton} from "../shared/relicsButton";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {ShedTransaction} from "../economy/transactions/shedTransaction";
@@ -13,14 +19,6 @@ type GeneratorProps = {
 }
 
 export class RelicPanel extends React.Component<GeneratorProps> {
-    assignGather(amount: number) {
-        const { gameState } = this.props;
-        assignGatherers(amount, gameState);
-    }
-    removeGather(amount: number) {
-        const { gameState } = this.props;
-        removeGatherers(amount, gameState);
-    }
 
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;
@@ -34,8 +32,8 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                 </div>
                 {studentsHired &&
                     <AssignWorkerOptions
-                        assignWorkers={(amount: number) =>this.assignGather(amount)}
-                        removeWorkers={(amount:number) => this.removeGather(amount)}
+                        assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
+                        removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
                         currentlyAssigned={gameState.jobAssignments.gatherRelics}
                         availableWorkers={availableStudents}>
                         Gathering Relics
@@ -43,11 +41,10 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                 }
                 {gameState.researchState.tours &&
                     <div>
-                        THIS NEEDS FIXING
                         <AssignWorkerOptions
-                            assignWorkers={(amount: number) =>this.assignGather(amount)}
-                            removeWorkers={(amount:number) => this.removeGather(amount)}
-                            currentlyAssigned={gameState.jobAssignments.gatherRelics}
+                            assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
+                            removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
+                            currentlyAssigned={gameState.jobAssignments.giftShop}
                             availableWorkers={availableStudents}>
                             Gift Shop
                         </AssignWorkerOptions>

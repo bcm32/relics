@@ -22,7 +22,7 @@ export class MapTheRuins extends Research {
             <div className="relics-tooltip">
                 <div className="relics-tooltip__description">
                     These relics seem to be found near a few particular features.
-                    <br/>Increases base relic search rate by 1.
+                    <br/>Increases manual base relic search rate by 1.
                 </div>
                 <div className="relics-tooltip__cost">
                     <div className="knowledge-text">Knowledge: 1</div>

@@ -31,6 +31,7 @@ export class ResourceState {
 export class JobAssignments {
     gatherRelics: number = 0;
     studyRelics: number = 0;
+    giftShop: number = 0;
 }
 
 export class JournalState {
@@ -54,7 +55,7 @@ export class ResearchState {
     betterShovels: boolean = false;
     bloodWard: boolean = false;
     mapTheGrounds: boolean = false;
-    tours: boolean = true;
+    tours: boolean = false;
 }
 
 export function mergeStateWithDefault(gameState: GameState): GameState {

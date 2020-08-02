@@ -69,6 +69,11 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     }
 
     clearSave() {
+        // eslint-disable-next-line no-restricted-globals
+        const response = confirm("Are you sure you want to clear your save?");
+        if (!response) {
+            return;
+        }
         // @ts-ignore
         this.clock.clearClock();
         const newState = newSave();

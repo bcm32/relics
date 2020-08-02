@@ -8,7 +8,7 @@ export class BetterShovels extends Research {
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
         if(BetterShovels.isValidPurchase(gameState, amount)) {
-            gameState.resourceState.money -= 50;
+            gameState.resourceState.money -= 25;
             gameState.researchState.betterShovels = true;
             addDetailedJournalEntry(gameState, {
                 entry: "A patron finds your work interesting, and provides a slow but steady drip of funding.",
@@ -19,7 +19,7 @@ export class BetterShovels extends Research {
     }
 
     static isValidPurchase(gameState: GameState, amount: number): boolean {
-        return gameState.resourceState.money >= 50;
+        return gameState.resourceState.money >= 25;
     }
 
     static buildTooltip(gameState: GameState): any {
@@ -27,9 +27,10 @@ export class BetterShovels extends Research {
             <div className="relics-tooltip">
                 <div className="relics-tooltip__description">
                     Buy the team their very first shovel. It's better than none.
+                    <br/>Student base gathering rate +.5 relics/s
                 </div>
                 <div className="relics-tooltip__cost">
-                    <div className="money-text">Money: 50</div>
+                    <div className="money-text">Money: 25</div>
                 </div>
             </div>
         );
