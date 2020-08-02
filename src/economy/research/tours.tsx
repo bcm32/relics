@@ -36,7 +36,7 @@ export class Tours extends Research {
     }
 
     static isAvailable(gameState: GameState): boolean {
-        return gameState.researchState.betterShovels && !gameState.researchState.tours;
+        return gameState.researchState.profiteering && !gameState.researchState.tours;
     }
 
     static title = "More funding";

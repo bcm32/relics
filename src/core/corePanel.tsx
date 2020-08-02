@@ -39,6 +39,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         let relicRate = currencyAmount;
         if(this.state.gameState.researchState.mapTheGrounds) relicRate += 1;
         newState.resourceState.relics += relicRate;
+        if(newState.resourceState.relics > newState.resourceState.relicCap) newState.resourceState.relics = newState.resourceState.relicCap;
         addJournalEntry(newState, "You dust off some potsherds.");
         this.setState({gameState: newState})
     }

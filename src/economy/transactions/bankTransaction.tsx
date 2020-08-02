@@ -22,7 +22,7 @@ export class BankTransaction extends Transaction{
 
     static getCost(gameState: GameState, purchaseAmount: number) {
         let sum = 0;
-        let theoreticalAmt = gameState.resourceState.sheds || 0;
+        let theoreticalAmt = gameState.resourceState.banks || 0;
         for (let i = 0; i < purchaseAmount; i++) {
             sum += 20 + theoreticalAmt * 20;
             theoreticalAmt++;
