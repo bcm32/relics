@@ -49,7 +49,8 @@ export class ResourcePanel extends React.Component<ResourceProps> {
                             Money: {gameState.resourceState.money.toFixed()}
                         </ResourcePanelEntry>}
                     {!!gameState.resourceState.knowledge &&
-                        <ResourcePanelEntry className="knowledge-text" rate={gameState.resourceState.knowledgeRate}>
+                        <ResourcePanelEntry className="knowledge-text" rate={gameState.resourceState.knowledgeRate}
+                                            cap={gameState.resourceState.knowledgeCap}>
                             Knowledge: {gameState.resourceState.knowledge.toFixed()}
                         </ResourcePanelEntry>}
                     {!!gameState.resourceState.blood &&

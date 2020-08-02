@@ -1,6 +1,12 @@
 import {saveGame} from "./saveService";
 import {GameState} from "./game-state";
-import {TICK_SPEED, SECONDS_PER_EVENT_CHECK, BASE_RELIC_CAP, BASE_MONEY_CAP} from "../config/constants";
+import {
+    TICK_SPEED,
+    SECONDS_PER_EVENT_CHECK,
+    BASE_RELIC_CAP,
+    BASE_MONEY_CAP,
+    BASE_KNOWLEDGE_CAP
+} from "../config/constants";
 import {randomEventsForDuration} from "./event-manager";
 
 export class GameClock {
@@ -81,9 +87,15 @@ export class GameClock {
         if(newState.resourceState.relics >= relicCap) newState.resourceState.relics = relicCap;
         newState.resourceState.relicCap = relicCap;
 
-        const moneyCap = BASE_MONEY_CAP;
+        let moneyCap = BASE_MONEY_CAP;
+        if(newState.researchState.banksOpen) moneyCap += 50;
+        if(newState.resourceState.banks > 0) moneyCap += newState.resourceState.banks * 50;
         if(newState.resourceState.money >= moneyCap) newState.resourceState.money = moneyCap;
-        newState.resourceState.moneyCap = BASE_MONEY_CAP;
+        newState.resourceState.moneyCap = moneyCap;
+
+        let knowledgeCap = BASE_KNOWLEDGE_CAP + this.gameState.resourceState.students*5;
+        if(newState.resourceState.knowledge >= knowledgeCap) newState.resourceState.knowledge = knowledgeCap;
+        newState.resourceState.knowledgeCap = knowledgeCap;
 
         // Aggregate stats
         newState.resourceState.relicRate     = relicsPerSecond;

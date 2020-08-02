@@ -11,11 +11,12 @@ type PanelSelectorProps = {
 export class PanelSelector extends React.Component<PanelSelectorProps>{
     render() {
         const {onChangePanel, selected, gameState} = this.props;
+        let name = "Dig Site";
         return (
             <div className={"nav-panel"}>
                 <NavButton selected={selected === GENERATORS_PANEL_KEY}
                            onClick={() => onChangePanel(GENERATORS_PANEL_KEY)}>
-                    Dig Site 1
+                    {name}
                 </NavButton>
                 {(gameState.resourceState.students >= 10 || gameState.achievements.labUnlocked) &&
                     <NavButton selected={selected === LAB_KEY}

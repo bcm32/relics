@@ -11,6 +11,7 @@ import {
 import {RelicsButton} from "../shared/relicsButton";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {ShedTransaction} from "../economy/transactions/shedTransaction";
+import {BankTransaction} from "../economy/transactions/bankTransaction";
 
 type GeneratorProps = {
     gameState: GameState,
@@ -71,6 +72,16 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                             tooltip={ShedTransaction.buildTooltip(gameState)}
                         >
                             Storage Shed: {gameState.resourceState.sheds}
+                        </RelicsButton>
+                    }
+                    {gameState.researchState.banksOpen &&
+                        <RelicsButton
+                            disabled={!BankTransaction.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, BankTransaction.commitTransaction)}
+                            id="banks"
+                            tooltip={BankTransaction.buildTooltip(gameState)}
+                        >
+                            Company Banks: {gameState.resourceState.banks}
                         </RelicsButton>
                     }
                 </div>

@@ -6,6 +6,7 @@ export const MAX_LOG_SIZE = 25;
 // Base Caps
 export const BASE_RELIC_CAP = 100;
 export const BASE_MONEY_CAP = 50;
+export const BASE_KNOWLEDGE_CAP = 20;
 
 // Panel Keys
 export const SETTINGS_PANEL_KEY = "SETTINGS";
