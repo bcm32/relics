@@ -35,9 +35,10 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     }
 
     addCurrency(currencyName: string, currencyAmount: number) {
-        // TODO: Abstract this for manual action & future FAME multiplier
         const newState = {...this.state.gameState};
-        newState.resourceState.relics += currencyAmount;
+        let relicRate = currencyAmount;
+        if(this.state.gameState.researchState.mapTheGrounds) relicRate += 1;
+        newState.resourceState.relics += relicRate;
         addJournalEntry(newState, "You dust off some potsherds.");
         this.setState({gameState: newState})
     }

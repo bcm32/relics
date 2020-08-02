@@ -2,6 +2,12 @@ import {GameState} from "./game-state";
 import {addDetailedJournalEntry, addJournalEntry, BLOOD_ENTRY_TYPE} from "./journal";
 import {countAvailableStudents, removeGatherers, removeStudyRelics} from "../economy/jobAssignments";
 
+export function randomEventsForDuration(gameState: GameState, amount: number) {
+    for (let i = 0; i < amount; i++) {
+        randomEvent(gameState);
+    }
+}
+
 export function randomEvent(gameState: GameState) {
     const diceRoll = roll1d100();
     if(diceRoll >= 95) {
@@ -25,7 +31,7 @@ export function randomEvent(gameState: GameState) {
             gameState.resourceState.students -= 1;
 
             addDetailedJournalEntry(gameState, {
-                entry: "You are short one student.",
+                entry: "A shout in the dark. You are short one student.",
                 entryType: BLOOD_ENTRY_TYPE,
             });
         } else {

@@ -6,8 +6,30 @@ type ResourceProps = {
     gameState: GameState,
 }
 
-export class ResourcePanel extends React.Component<ResourceProps> {
+type ResourcePanelEntryProps = {
+    rate?: number;
+    cap?: number;
+    className?: string;
+}
 
+export class ResourcePanelEntry extends React.Component<ResourcePanelEntryProps> {
+    render() {
+        const renderRate = this.props.rate !== undefined && this.props.rate !== 0;
+        const rateText = this.props.rate + "/s";
+        return (
+            <div className="resources__entry">
+                <div className={this.props.className}>
+                    {this.props.children}
+                    {this.props.cap && (
+                        <span className="resources__rate">/{this.props.cap}</span>
+                    )}
+                </div>
+                <div className="resources__rate">{renderRate && rateText}</div>
+            </div>
+        );
+    }
+}
+export class ResourcePanel extends React.Component<ResourceProps> {
     render() {
         const { gameState } = this.props;
 
@@ -15,13 +37,23 @@ export class ResourcePanel extends React.Component<ResourceProps> {
             <div>
                 <div className="panel--center-align resources__container">
                     {!!gameState.resourceState.relics &&
-                        <div>Relics: {gameState.resourceState.relics.toFixed()}</div>}
+                        <ResourcePanelEntry rate={gameState.resourceState.relicRate}
+                                            cap={gameState.resourceState.relicCap}>
+                            Relics: {gameState.resourceState.relics.toFixed()}
+                        </ResourcePanelEntry>}
                     {gameState.researchState.profiteering &&
-                        <div className="money-text">Money: {gameState.resourceState.money.toFixed()}</div>}
+                        <ResourcePanelEntry className="money-text" rate={gameState.resourceState.moneyRate}
+                                            cap={gameState.resourceState.moneyCap}>
+                            Money: {gameState.resourceState.money.toFixed()}
+                        </ResourcePanelEntry>}
                     {!!gameState.resourceState.knowledge &&
-                        <div className="knowledge-text">Knowledge: {gameState.resourceState.knowledge.toFixed()}</div>}
+                        <ResourcePanelEntry className="knowledge-text" rate={gameState.resourceState.knowledgeRate}>
+                            Knowledge: {gameState.resourceState.knowledge.toFixed()}
+                        </ResourcePanelEntry>}
                     {!!gameState.resourceState.blood &&
-                        <div className="blood-text">Blood: {gameState.resourceState.blood.toFixed()}</div>}
+                        <ResourcePanelEntry className="blood-text">
+                            Blood: {gameState.resourceState.blood.toFixed()}
+                        </ResourcePanelEntry>}
                 </div>
                 {!!gameState.resourceState.students &&
                     <div className="panel--center-align resources__container">

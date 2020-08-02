@@ -35,7 +35,8 @@ export class Settings extends React.Component<SettingsProps> {
                         )}
                     </ThemeContext.Consumer>
                 </div>
-                <div>Relics - A game by bcm32.</div>
+                <p>Relics - A game by bearhanded.</p>
+                <p><a href="https://github.com/bearhanded/relics">GitHub</a></p>
             </div>
         );
     }

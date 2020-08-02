@@ -5,3 +5,11 @@ export class Transaction {
     static commitTransaction = (gameState: GameState, amount: number): GameState => {return gameState};
     static updateClock: boolean = false;
 }
+
+export class Research extends Transaction {
+    static isAvailable = (gameState: GameState): boolean => false;
+    static buildTooltip = (gameState: GameState): any => "MISSING TOOLTIP";
+    static title: string = "MISSING TITLE";
+    static className = "";
+    static id = "";
+}

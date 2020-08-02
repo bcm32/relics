@@ -29,10 +29,10 @@ export class RelicsButton extends React.Component<RelicsButtonProps> {
             dataTipAttr['data-for'] = id;
         }
         return (
-            <span { ...dataTipAttr} id={id} className={className} onClick={clickFunc}>
+            <span { ...dataTipAttr} id={id} key={id} className={className} onClick={clickFunc}>
                 {children}
                 {tooltip &&
-                    <ReactTooltip id={id} place="bottom" effect="solid">
+                    <ReactTooltip id={id} key={id} place="bottom" effect="solid">
                         {tooltip}
                     </ReactTooltip>
                 }

@@ -2,7 +2,7 @@
   "name": "relics-app",
   "version": "0.2.0",
   "private": false,
-  "homepage": "http://bcm32.github.io/relics",
+  "homepage": "http://bearhanded.github.io/relics",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

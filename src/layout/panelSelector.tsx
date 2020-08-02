@@ -17,7 +17,7 @@ export class PanelSelector extends React.Component<PanelSelectorProps>{
                            onClick={() => onChangePanel(GENERATORS_PANEL_KEY)}>
                     Dig Site 1
                 </NavButton>
-                {gameState.resourceState.students >= 10 &&
+                {(gameState.resourceState.students >= 10 || gameState.achievements.labUnlocked) &&
                     <NavButton selected={selected === LAB_KEY}
                                onClick={() => onChangePanel(LAB_KEY)}>
                         Research Lab
