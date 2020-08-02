@@ -230,6 +230,18 @@ $pink: #F92672;
   margin: 4px 0;
 }
 
+.outline-container {
+  border: 1px solid $dark-gray;
+  padding: 4px;
+  margin: 8px;
+}
+
+.bottom-border {
+  border-bottom: 1px solid $dark-gray;
+  padding: 0 0 12px;
+  margin: 8px 0;
+}
+
 .resources__container {
   border: 1px solid $dark-gray;
   padding: 4px;

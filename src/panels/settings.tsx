@@ -20,7 +20,8 @@ export class Settings extends React.Component<SettingsProps> {
 
         return (
             <div>
-                <div className={"button-container"}>
+                <div className={"button-container bottom-border"}>
+                    <p>The game saves automatically every 30s.</p>
                     <RelicsButton onClick={() => onSave()}>Save</RelicsButton>
                     <RelicsButton onClick={() => onClearSave()}>Clear Save</RelicsButton>
                 </div>
