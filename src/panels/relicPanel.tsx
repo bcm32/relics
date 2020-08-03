@@ -32,23 +32,28 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                     <RelicsButton onClick={() => onAddCurrency("relics", 1)}>Look for relics</RelicsButton>
                 </div>
                 {studentsHired &&
-                    <AssignWorkerOptions
-                        assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
-                        removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
-                        currentlyAssigned={gameState.jobAssignments.gatherRelics}
-                        availableWorkers={availableStudents}>
-                        Gathering Relics
-                    </AssignWorkerOptions>
-                }
-                {gameState.researchState.tours &&
-                    <div>
+                    <div className="panel__assignments-container">
+                        <h2>Job Assignments</h2>
                         <AssignWorkerOptions
-                            assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
-                            removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
-                            currentlyAssigned={gameState.jobAssignments.giftShop}
+                            assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
+                            removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
+                            currentlyAssigned={gameState.jobAssignments.gatherRelics}
                             availableWorkers={availableStudents}>
-                            Gift Shop
+                            Gather Relics
                         </AssignWorkerOptions>
+
+                        {gameState.researchState.tours &&
+                            <div>
+                                <AssignWorkerOptions
+                                    assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
+                                    removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
+                                    currentlyAssigned={gameState.jobAssignments.giftShop}
+                                    availableWorkers={availableStudents}
+                                >
+                                    Gift Shop
+                                </AssignWorkerOptions>
+                            </div>
+                        }
                     </div>
                 }
                 <br/>
