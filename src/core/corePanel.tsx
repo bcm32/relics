@@ -4,12 +4,13 @@ import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
 import {GameClock} from "./game-clock";
-import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {GENERATORS_PANEL_KEY, LAB_KEY, RITUAL_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
 import {AdventureLog} from "../panels/adventureLog";
 import {ResourcePanel} from "../panels/resourcePanel";
 import {PanelSelector} from "../layout/panelSelector";
 import {ResearchLab} from "../panels/lab";
+import {RitualPanel} from "../panels/ritualPanel";
 
 type CoreProps = {}
 type CoreState = {
@@ -25,7 +26,6 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     };
 
     componentDidMount(): void {
-        // TODO: Calculate offline progress before starting clock
         this.clock = new GameClock(this.state.gameState, (newState: GameState) => this.onTick(newState));
         this.setState({activePanel: GENERATORS_PANEL_KEY});
     }
@@ -39,6 +39,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         let relicRate = currencyAmount;
         if(this.state.gameState.researchState.mapTheGrounds) relicRate += 1;
         newState.resourceState.relics += relicRate;
+        if(newState.resourceState.relics > newState.resourceState.relicCap) newState.resourceState.relics = newState.resourceState.relicCap;
         addJournalEntry(newState, "You dust off some potsherds.");
         this.setState({gameState: newState})
     }
@@ -76,12 +77,21 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         }
         // @ts-ignore
         this.clock.clearClock();
-        const newState = newSave();
-        newState.saveTime = new Date();
-        this.setState({gameState: newState});
-        saveGame(newState);
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        const newState = {gameState: newSave()};
+        newState.gameState.saveTime = new Date();
+        this.setState(newState);
+        this.clock = new GameClock(newState.gameState, (newState: GameState) => this.onTick(newState));
+        saveGame(newState.gameState);
+    }
+
+    private importSave(save: GameState | null) {
+        if(save == null) return;
+        // @ts-ignore
+        this.clock.clearClock();
+        const newState = {gameState: save};
+        this.setState(newState);
+        this.clock = new GameClock(newState.gameState, (newState: GameState) => this.onTick(newState));
+        saveGame(save);
     }
 
     render() {
@@ -93,12 +103,21 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         gameState={this.state.gameState}
                         onSave={() => this.save()}
                         onClearSave={() => this.clearSave()}
+                        onImportSave={(save: GameState | null) => this.importSave(save)}
                     />
                 );
                 break;
             case LAB_KEY:
                 activePanel = (
                     <ResearchLab
+                        gameState={this.state.gameState}
+                        onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
+                    />
+                );
+                break;
+            case RITUAL_PANEL_KEY:
+                activePanel = (
+                    <RitualPanel
                         gameState={this.state.gameState}
                         onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
@@ -113,6 +132,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
                 );
+
         }
 
         return (

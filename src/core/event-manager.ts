@@ -1,6 +1,7 @@
 import {GameState} from "./game-state";
 import {addDetailedJournalEntry, addJournalEntry, BLOOD_ENTRY_TYPE} from "./journal";
-import {countAvailableStudents, removeGatherers, removeStudyRelics} from "../economy/jobAssignments";
+import {countAvailableStudents, removeGatherers, removeGiftShop, removeStudyRelics} from "../economy/jobAssignments";
+import {safeResource} from "../economy/Transaction";
 
 export function randomEventsForDuration(gameState: GameState, amount: number) {
     for (let i = 0; i < amount; i++) {
@@ -18,26 +19,30 @@ export function randomEvent(gameState: GameState) {
         gameState.resourceState.relics += 100
     }
     if(diceRoll === 1 && gameState.resourceState.students > 2) {
-        // A dark event occurs
-        if(!gameState.researchState.bloodWard) {
+        // A dark event occurs, protect with blood
+        // TODO: Hungrier events
+        if(gameState.researchState.bloodWard && gameState.resourceState.blood >= 1) {
+            gameState.resourceState.blood = safeResource(gameState.resourceState.blood) - 1;
+            addDetailedJournalEntry(gameState, {
+                entry: "The ward protects the student in exchange for a drop shed.",
+                entryType: BLOOD_ENTRY_TYPE,
+            });
+        }
+        else  {
             if (countAvailableStudents(gameState) <= 0) {
                 if (gameState.jobAssignments.gatherRelics >= 1) {
                     removeGatherers(1, gameState);
                 } else if (gameState.jobAssignments.studyRelics >= 1) {
                     removeStudyRelics(1, gameState);
+                } else if (gameState.jobAssignments.studyRelics >= 1) {
+                    removeGiftShop(1, gameState);
                 }
             }
-            gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
+            gameState.resourceState.blood = safeResource(gameState.resourceState.blood) + 1;
             gameState.resourceState.students -= 1;
 
             addDetailedJournalEntry(gameState, {
                 entry: "A shout in the dark. You are short one student.",
-                entryType: BLOOD_ENTRY_TYPE,
-            });
-        } else {
-            gameState.resourceState.blood ? gameState.resourceState.blood++ : gameState.resourceState.blood = 1;
-            addDetailedJournalEntry(gameState, {
-                entry: "The ward protects the student in exchange for a drop shed.",
                 entryType: BLOOD_ENTRY_TYPE,
             });
         }

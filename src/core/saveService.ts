@@ -7,6 +7,10 @@ export function saveGameExists() {
 
 export function loadSave() {
     const string = localStorage.getItem("RelicsSave");
+    return loadSaveFromString(string);
+}
+
+function loadSaveFromString(string: string | null) {
     const save =  string ? JSON.parse(atob(string)) : null;
     return mergeStateWithDefault(save);
 }
@@ -22,12 +26,17 @@ export function saveGame(gameState: GameState, manualSave: boolean = false) {
 }
 
 
-export function exportSave(gameState: GameState) {
-    saveGame(gameState);
-    // TODO: export
-}
+export function importSave(): GameState | null {
+    const importText  = prompt("Import Save", "");
 
-export function importSave(gameState: GameState) {
+    if (importText == null || importText === "") {
+        return null;
+    } else {
+        // Try to parse
+        return loadSaveFromString(importText);
+    }}
+
+export function exportSave(gameState: GameState): string {
     saveGame(gameState);
-    // TODO: import
+    return btoa(JSON.stringify(gameState));
 }

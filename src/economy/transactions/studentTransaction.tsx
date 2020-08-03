@@ -37,6 +37,7 @@ export class StudentTransaction extends Transaction{
                 <div className="relics-tooltip__description">
                     Hire some students to dust off relics for you.
                     They work for relics.
+                    { gameState.achievements.labUnlocked && (<div className={"knowledge-text"}>+5 Knowledge cap</div>)}
                 </div>
                 <div className="relics-tooltip__cost">
                     <div>Relics: {StudentTransaction.getCost(gameState, 1)}</div>

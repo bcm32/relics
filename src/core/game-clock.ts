@@ -1,7 +1,14 @@
 import {saveGame} from "./saveService";
 import {GameState} from "./game-state";
-import {TICK_SPEED, SECONDS_PER_EVENT_CHECK, BASE_RELIC_CAP, BASE_MONEY_CAP} from "../config/constants";
+import {
+    TICK_SPEED,
+    SECONDS_PER_EVENT_CHECK,
+    BASE_RELIC_CAP,
+    BASE_MONEY_CAP,
+    BASE_KNOWLEDGE_CAP
+} from "../config/constants";
 import {randomEventsForDuration} from "./event-manager";
+import {safeResource} from "../economy/Transaction";
 
 export class GameClock {
     saveClockId: any;
@@ -51,6 +58,7 @@ export class GameClock {
         let relicsPerSecond = 0;
         let knowledgePerSecond = 0;
         let moneyPerSecond = 0;
+        let bloodPerSecond = 0;
 
         // Calculate rates and side effects
         if(this.gameState.jobAssignments.gatherRelics) {
@@ -66,29 +74,42 @@ export class GameClock {
         if(this.gameState.researchState.profiteering) {
             moneyPerSecond = .25;
             if(this.gameState.jobAssignments.giftShop) {
-                moneyPerSecond += this.gameState.jobAssignments.giftShop*.125;
-                relicsPerSecond -= this.gameState.jobAssignments.giftShop*2.5;
+                const requiredRelicConsumption = this.gameState.jobAssignments.giftShop*2.5;
+                if(this.gameState.resourceState.relics >= requiredRelicConsumption) {
+                    moneyPerSecond += this.gameState.jobAssignments.giftShop * .125;
+                    relicsPerSecond -= requiredRelicConsumption;
+                }
             }
         }
+        bloodPerSecond = 0;
+        bloodPerSecond += safeResource(this.gameState.resourceState.bleedingStones)*.2;
 
         // Apply rates to resources
         newState.resourceState.money     += moneyPerSecond      *this.tickRatio;
         newState.resourceState.relics    += relicsPerSecond     *this.tickRatio;
         newState.resourceState.knowledge += knowledgePerSecond  *this.tickRatio;
+        newState.resourceState.blood     += bloodPerSecond      *this.tickRatio;
 
         // Apply caps
         const relicCap = BASE_RELIC_CAP + this.gameState.resourceState.sheds*50;
         if(newState.resourceState.relics >= relicCap) newState.resourceState.relics = relicCap;
         newState.resourceState.relicCap = relicCap;
 
-        const moneyCap = BASE_MONEY_CAP;
+        let moneyCap = BASE_MONEY_CAP;
+        if(newState.researchState.banksOpen) moneyCap += 50;
+        if(newState.resourceState.banks > 0) moneyCap += newState.resourceState.banks * 50;
         if(newState.resourceState.money >= moneyCap) newState.resourceState.money = moneyCap;
-        newState.resourceState.moneyCap = BASE_MONEY_CAP;
+        newState.resourceState.moneyCap = moneyCap;
+
+        let knowledgeCap = BASE_KNOWLEDGE_CAP + this.gameState.resourceState.students*5;
+        if(newState.resourceState.knowledge >= knowledgeCap) newState.resourceState.knowledge = knowledgeCap;
+        newState.resourceState.knowledgeCap = knowledgeCap;
 
         // Aggregate stats
         newState.resourceState.relicRate     = relicsPerSecond;
         newState.resourceState.moneyRate     = moneyPerSecond;
         newState.resourceState.knowledgeRate = knowledgePerSecond;
+        newState.resourceState.bloodRate     = bloodPerSecond;
 
         // Kick off any events that have transpired
         this.manageRandomEvent(newState);
@@ -107,5 +128,6 @@ export class GameClock {
         clearInterval(this.resourceClockId);
         clearInterval(this.saveClockId);
     }
+
 
 }

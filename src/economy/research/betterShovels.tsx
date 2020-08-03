@@ -11,7 +11,7 @@ export class BetterShovels extends Research {
             gameState.resourceState.money -= 25;
             gameState.researchState.betterShovels = true;
             addDetailedJournalEntry(gameState, {
-                entry: "A patron finds your work interesting, and provides a slow but steady drip of funding.",
+                entry: "+1 Shovel",
                 entryType: ACHIEVEMENT_ENTRY_TYPE
             });
         }

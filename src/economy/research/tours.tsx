@@ -11,7 +11,8 @@ export class Tours extends Research {
             gameState.resourceState.knowledge -= 25;
             gameState.researchState.tours = true;
             addDetailedJournalEntry(gameState, {
-                entry: "Wait, people will pay to see this place?",
+                entry: "Wait, people will pay to see this place? " +
+                    "Your students begin offering tours and open a gift shop.",
                 entryType: COMMON_ENTRY_TYPE
             });
         }
@@ -36,7 +37,7 @@ export class Tours extends Research {
     }
 
     static isAvailable(gameState: GameState): boolean {
-        return gameState.researchState.betterShovels && !gameState.researchState.tours;
+        return gameState.researchState.profiteering && !gameState.researchState.tours;
     }
 
     static title = "More funding";

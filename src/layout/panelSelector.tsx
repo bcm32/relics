@@ -1,5 +1,5 @@
 import React from "react";
-import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {GENERATORS_PANEL_KEY, LAB_KEY, RITUAL_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {NavButton} from "./navButton";
 import {GameState} from "../core/game-state";
 
@@ -11,17 +11,24 @@ type PanelSelectorProps = {
 export class PanelSelector extends React.Component<PanelSelectorProps>{
     render() {
         const {onChangePanel, selected, gameState} = this.props;
+        let name = "Dig Site";
         return (
             <div className={"nav-panel"}>
                 <NavButton selected={selected === GENERATORS_PANEL_KEY}
                            onClick={() => onChangePanel(GENERATORS_PANEL_KEY)}>
-                    Dig Site 1
+                    {name}
                 </NavButton>
                 {(gameState.resourceState.students >= 10 || gameState.achievements.labUnlocked) &&
                     <NavButton selected={selected === LAB_KEY}
                                onClick={() => onChangePanel(LAB_KEY)}>
                         Research Lab
                     </NavButton>
+                }
+                {(gameState.researchState.ritualCircle) &&
+                <NavButton selected={selected === RITUAL_PANEL_KEY}
+                           onClick={() => onChangePanel(RITUAL_PANEL_KEY)}>
+                    Ritual Chamber
+                </NavButton>
                 }
 
                 <NavButton selected={selected === SETTINGS_PANEL_KEY}

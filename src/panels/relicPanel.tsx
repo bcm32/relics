@@ -11,14 +11,15 @@ import {
 import {RelicsButton} from "../shared/relicsButton";
 import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {ShedTransaction} from "../economy/transactions/shedTransaction";
+import {BankTransaction} from "../economy/transactions/bankTransaction";
 
-type GeneratorProps = {
+type RelicProps = {
     gameState: GameState,
     onPurchase: any,
     onAddCurrency: any
 }
 
-export class RelicPanel extends React.Component<GeneratorProps> {
+export class RelicPanel extends React.Component<RelicProps> {
 
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;
@@ -31,23 +32,28 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                     <RelicsButton onClick={() => onAddCurrency("relics", 1)}>Look for relics</RelicsButton>
                 </div>
                 {studentsHired &&
-                    <AssignWorkerOptions
-                        assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
-                        removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
-                        currentlyAssigned={gameState.jobAssignments.gatherRelics}
-                        availableWorkers={availableStudents}>
-                        Gathering Relics
-                    </AssignWorkerOptions>
-                }
-                {gameState.researchState.tours &&
-                    <div>
+                    <div className="panel__assignments-container">
+                        <h2>Job Assignments</h2>
                         <AssignWorkerOptions
-                            assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
-                            removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
-                            currentlyAssigned={gameState.jobAssignments.giftShop}
+                            assignWorkers={(amount: number) => assignGatherers(amount, this.props.gameState)}
+                            removeWorkers={(amount:number) => removeGatherers(amount, this.props.gameState)}
+                            currentlyAssigned={gameState.jobAssignments.gatherRelics}
                             availableWorkers={availableStudents}>
-                            Gift Shop
+                            Gather Relics
                         </AssignWorkerOptions>
+
+                        {gameState.researchState.tours &&
+                            <div>
+                                <AssignWorkerOptions
+                                    assignWorkers={(amount: number) => assignGiftShop(amount, this.props.gameState)}
+                                    removeWorkers={(amount:number) => removeGiftShop(amount, this.props.gameState)}
+                                    currentlyAssigned={gameState.jobAssignments.giftShop}
+                                    availableWorkers={availableStudents}
+                                >
+                                    Gift Shop
+                                </AssignWorkerOptions>
+                            </div>
+                        }
                     </div>
                 }
                 <br/>
@@ -71,6 +77,16 @@ export class RelicPanel extends React.Component<GeneratorProps> {
                             tooltip={ShedTransaction.buildTooltip(gameState)}
                         >
                             Storage Shed: {gameState.resourceState.sheds}
+                        </RelicsButton>
+                    }
+                    {gameState.researchState.banksOpen &&
+                        <RelicsButton
+                            disabled={!BankTransaction.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, BankTransaction.commitTransaction)}
+                            id="banks"
+                            tooltip={BankTransaction.buildTooltip(gameState)}
+                        >
+                            Company Banks: {gameState.resourceState.banks}
                         </RelicsButton>
                     }
                 </div>

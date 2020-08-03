@@ -9,6 +9,7 @@ $dark-secondary: #49483E;
 $dark-text: #F8F8F0;
 $dark-gray: #888;
 $dark-blue: #66D9EF;
+$gray-brown: #3e3d32;
 $purple: #AE81FF;
 
 $knowledge-color: $purple;
@@ -16,6 +17,9 @@ $blood-color: #f93140;
 $money-color: #E6DB74;
 $pink: #F92672;
 
+h2 {
+  font-size: 1.2em;
+}
 
 .app {
   transition: background-color 0.8s ease, color 0.8s ease;
@@ -51,6 +55,14 @@ $pink: #F92672;
 .app--light {
   background: $light-bg;
   color:  $light-text;
+
+  .nav-button:hover{
+    background-color: $light-secondary;
+  }
+
+  .relics-button:hover:not(.relics-button--disabled){
+    background-color: $light-secondary;
+  }
 }
 
 
@@ -124,6 +136,15 @@ $pink: #F92672;
   &.journal__entry--achievement {
     color: fuchsia;
   }
+}
+
+/*
+    Settings
+ */
+.settings__export-text {
+  overflow: scroll;
+  word-wrap: break-word;
+  max-height: 200px;
 }
 
 .knowledge-button {
@@ -204,6 +225,10 @@ $pink: #F92672;
     width: 16px;
     height: 16px;
   }
+
+  &:hover:not(.relics-button--disabled){
+    background-color: $gray-brown;
+  }
 }
 
 .nav-panel {
@@ -215,6 +240,10 @@ $pink: #F92672;
   padding: 6px;
   cursor: pointer;
   user-select: none;
+
+  &:hover{
+    background-color: $gray-brown;
+  }
 
   &.nav-button--disabled {
     color: $dark-gray;
@@ -230,10 +259,25 @@ $pink: #F92672;
   margin: 4px 0;
 }
 
+.outline-container {
+  border: 1px solid $dark-gray;
+  padding: 4px;
+  margin: 8px;
+}
+
+.bottom-border {
+  border-bottom: 1px solid $dark-gray;
+  padding: 0 0 12px;
+  margin: 8px 0;
+}
+
 .resources__container {
   border: 1px solid $dark-gray;
   padding: 4px;
   margin: 8px;
+}
+
+.panel__assignments-container {
 }
 
 .resources__entry {
