@@ -21,11 +21,12 @@ export class ResourceState {
     knowledgeRate: number = 0;
     knowledgeCap: number = 0;
     blood: number = 0;
-    bloodRate = 0;
+    bloodRate: number = 0;
     money: number = 0;
     moneyRate = 0;
     moneyCap = 0;
     banks = 0;
+    bleedingStones = 0;
     fame: number = 0;
     whispers: number = 0;
 }
@@ -59,6 +60,7 @@ export class ResearchState {
     bloodWard: boolean = false;
     mapTheGrounds: boolean = false;
     tours: boolean = false;
+    ritualCircle: boolean = false;
 }
 
 export function mergeStateWithDefault(gameState: GameState): GameState {

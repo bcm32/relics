@@ -1,6 +1,7 @@
 import * as React from "react";
 import { GameState } from "../core/game-state";
 import {countAvailableStudents} from "../economy/jobAssignments";
+import {formatRateNumber} from "../shared/formatNumbers";
 
 type ResourceProps = {
     gameState: GameState,
@@ -14,15 +15,16 @@ type ResourcePanelEntryProps = {
 
 export class ResourcePanelEntry extends React.Component<ResourcePanelEntryProps> {
     render() {
+        let rateText = "";
         const renderRate = this.props.rate !== undefined && this.props.rate !== 0;
-        const rateText = this.props.rate + "/s";
+        if(this.props.rate !== undefined) rateText = formatRateNumber(this.props.rate) + "/s"; // ts has a conniption without the IF
         const renderCap = this.props.cap !== undefined && this.props.cap !== 0;
 
         return (
             <div className="resources__entry">
                 <div className={this.props.className}>
                     {this.props.children}
-                    {this.props.cap && (
+                    {renderCap && (
                         <span className="resources__rate">/{this.props.cap}</span>
                     )}
                 </div>
@@ -48,15 +50,15 @@ export class ResourcePanel extends React.Component<ResourceProps> {
                                             cap={gameState.resourceState.moneyCap}>
                             Money: {gameState.resourceState.money.toFixed()}
                         </ResourcePanelEntry>}
-                    {!!gameState.resourceState.knowledge &&
+                    {gameState.achievements.labUnlocked &&
                         <ResourcePanelEntry className="knowledge-text" rate={gameState.resourceState.knowledgeRate}
                                             cap={gameState.resourceState.knowledgeCap}>
                             Knowledge: {gameState.resourceState.knowledge.toFixed()}
                         </ResourcePanelEntry>}
-                    {!!gameState.resourceState.blood &&
-                        <ResourcePanelEntry className="blood-text">
-                            Blood: {gameState.resourceState.blood.toFixed()}
-                        </ResourcePanelEntry>}
+                    {(!!gameState.resourceState.blood || gameState.researchState.bloodWard) &&
+                    <ResourcePanelEntry className="blood-text" rate={gameState.resourceState.bloodRate}>
+                        Blood: {gameState.resourceState.blood.toFixed()}
+                    </ResourcePanelEntry>}
                 </div>
                 {!!gameState.resourceState.students &&
                     <div className="panel--center-align resources__container">
@@ -67,3 +69,4 @@ export class ResourcePanel extends React.Component<ResourceProps> {
         );
     }
 }
+

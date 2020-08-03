@@ -7,6 +7,7 @@ import {StudentKnowledge} from "./research/studentKnowledge";
 import {MapTheRuins} from "./research/mapTheRuins";
 import {Tours} from "./research/tours";
 import {Banks} from "./research/banks";
+import {RitualCircle} from "./research/ritualCircle";
 
 export const allResearches: typeof Research[] = [
     BetterShovels,
@@ -15,7 +16,8 @@ export const allResearches: typeof Research[] = [
     StudentKnowledge,
     MapTheRuins,
     Tours,
-    Banks
+    Banks,
+    RitualCircle,
 ];
 
 export function getAvailableResearches(gameState: GameState): typeof Research[] {

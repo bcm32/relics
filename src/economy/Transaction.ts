@@ -14,6 +14,6 @@ export class Research extends Transaction {
     static id = "";
 }
 
-export function safeResource(resource: any) {
+export function safeResource(resource: any): number {
     return (resource == undefined || resource == null) ? 0 : resource;
 }

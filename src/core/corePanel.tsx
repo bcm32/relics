@@ -4,12 +4,13 @@ import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
 import {GameClock} from "./game-clock";
-import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {GENERATORS_PANEL_KEY, LAB_KEY, RITUAL_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
 import {AdventureLog} from "../panels/adventureLog";
 import {ResourcePanel} from "../panels/resourcePanel";
 import {PanelSelector} from "../layout/panelSelector";
 import {ResearchLab} from "../panels/lab";
+import {RitualPanel} from "../panels/ritualPanel";
 
 type CoreProps = {}
 type CoreState = {
@@ -25,7 +26,6 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
     };
 
     componentDidMount(): void {
-        // TODO: Calculate offline progress before starting clock
         this.clock = new GameClock(this.state.gameState, (newState: GameState) => this.onTick(newState));
         this.setState({activePanel: GENERATORS_PANEL_KEY});
     }
@@ -115,6 +115,14 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                     />
                 );
                 break;
+            case RITUAL_PANEL_KEY:
+                activePanel = (
+                    <RitualPanel
+                        gameState={this.state.gameState}
+                        onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
+                    />
+                );
+                break;
             case GENERATORS_PANEL_KEY:
             default:
                 activePanel = (
@@ -124,6 +132,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
                 );
+
         }
 
         return (

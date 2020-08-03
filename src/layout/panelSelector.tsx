@@ -1,5 +1,5 @@
 import React from "react";
-import {GENERATORS_PANEL_KEY, LAB_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {GENERATORS_PANEL_KEY, LAB_KEY, RITUAL_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
 import {NavButton} from "./navButton";
 import {GameState} from "../core/game-state";
 
@@ -23,6 +23,12 @@ export class PanelSelector extends React.Component<PanelSelectorProps>{
                                onClick={() => onChangePanel(LAB_KEY)}>
                         Research Lab
                     </NavButton>
+                }
+                {(gameState.researchState.ritualCircle) &&
+                <NavButton selected={selected === RITUAL_PANEL_KEY}
+                           onClick={() => onChangePanel(RITUAL_PANEL_KEY)}>
+                    Ritual Chamber
+                </NavButton>
                 }
 
                 <NavButton selected={selected === SETTINGS_PANEL_KEY}

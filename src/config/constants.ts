@@ -12,3 +12,4 @@ export const BASE_KNOWLEDGE_CAP = 10;
 export const SETTINGS_PANEL_KEY = "SETTINGS";
 export const GENERATORS_PANEL_KEY = "GENERATORS";
 export const LAB_KEY = "LAB";
+export const RITUAL_PANEL_KEY = "RITUALS";

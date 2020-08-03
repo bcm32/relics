@@ -13,13 +13,13 @@ import {AssignWorkerOptions} from "../shared/AssignWorkerOptions";
 import {ShedTransaction} from "../economy/transactions/shedTransaction";
 import {BankTransaction} from "../economy/transactions/bankTransaction";
 
-type GeneratorProps = {
+type RelicProps = {
     gameState: GameState,
     onPurchase: any,
     onAddCurrency: any
 }
 
-export class RelicPanel extends React.Component<GeneratorProps> {
+export class RelicPanel extends React.Component<RelicProps> {
 
     render() {
         const { gameState, onAddCurrency, onPurchase } = this.props;

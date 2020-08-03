@@ -35,6 +35,7 @@ export function removeGiftShop(amount: number, gameState: GameState){
 
 export function countAvailableStudents(gameState: GameState) {
     const assignedStudents = (gameState.jobAssignments.gatherRelics || 0)
-        + (gameState.jobAssignments.studyRelics || 0);
+        + (gameState.jobAssignments.studyRelics || 0)
+        + (gameState.jobAssignments.giftShop|| 0);
     return gameState.resourceState.students - assignedStudents;
 }
