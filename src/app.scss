@@ -126,6 +126,15 @@ $pink: #F92672;
   }
 }
 
+/*
+    Settings
+ */
+.settings__export-text {
+  overflow: scroll;
+  word-wrap: break-word;
+  max-height: 200px;
+}
+
 .knowledge-button {
   border-color: $knowledge-color !important;
 }

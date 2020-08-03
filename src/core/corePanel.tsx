@@ -77,12 +77,21 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
         }
         // @ts-ignore
         this.clock.clearClock();
-        const newState = newSave();
-        newState.saveTime = new Date();
-        this.setState({gameState: newState});
-        saveGame(newState);
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        const newState = {gameState: newSave()};
+        newState.gameState.saveTime = new Date();
+        this.setState(newState);
+        this.clock = new GameClock(newState.gameState, (newState: GameState) => this.onTick(newState));
+        saveGame(newState.gameState);
+    }
+
+    private importSave(save: GameState | null) {
+        if(save == null) return;
+        // @ts-ignore
+        this.clock.clearClock();
+        const newState = {gameState: save};
+        this.setState(newState);
+        this.clock = new GameClock(newState.gameState, (newState: GameState) => this.onTick(newState));
+        saveGame(save);
     }
 
     render() {
@@ -94,6 +103,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         gameState={this.state.gameState}
                         onSave={() => this.save()}
                         onClearSave={() => this.clearSave()}
+                        onImportSave={(save: GameState | null) => this.importSave(save)}
                     />
                 );
                 break;
