@@ -3,12 +3,14 @@ import {ThemeContext} from "../layout/theme-context";
 import React from "react";
 import {RelicsButton} from "../shared/relicsButton";
 import {exportSave, importSave} from "../core/saveService";
+import {PATCH_NOTES_KEY} from "../config/constants";
 
 type SettingsProps = {
     gameState: GameState,
     onSave: any,
     onClearSave: any,
-    onImportSave: any
+    onImportSave: any,
+    onChangePanel: any,
 }
 
 type SaveDataState = {
@@ -80,6 +82,7 @@ export class Settings extends React.Component<SettingsProps, SaveDataState> {
                 </div>
                 <p>Relics - A game by bearhanded.</p>
                 <p><a href="https://github.com/bearhanded/relics">GitHub</a></p>
+                <p><RelicsButton onClick={() => this.props.onChangePanel(PATCH_NOTES_KEY)}>Patch Notes</RelicsButton></p>
             </div>
         );
     }

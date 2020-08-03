@@ -1,13 +1,15 @@
 import {COMMON_ENTRY_TYPE, DetailedEntry} from "./journal";
+import {CURRENT_VERSION} from "../config/versioning";
 
 export class GameState {
     resourceState: ResourceState = new ResourceState();
     jobAssignments: JobAssignments = new JobAssignments();
     journalState: JournalState = new JournalState();
-    saveTime: Date = new Date();
     settings: SettingsState = new SettingsState();
     achievements: Achievements = new Achievements();
     researchState: ResearchState = new ResearchState();
+    saveTime: Date = new Date();
+    version: string = CURRENT_VERSION;
 }
 
 export class ResourceState {

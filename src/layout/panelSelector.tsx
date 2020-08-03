@@ -35,6 +35,8 @@ export class PanelSelector extends React.Component<PanelSelectorProps>{
                            onClick={() => onChangePanel(SETTINGS_PANEL_KEY)}>
                     Settings
                 </NavButton>
+
+
             </div>
         );
     }

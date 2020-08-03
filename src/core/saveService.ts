@@ -1,5 +1,6 @@
 import {GameState, mergeStateWithDefault} from "./game-state";
 import {addJournalEntry} from "./journal";
+import {CURRENT_VERSION} from "../config/versioning";
 
 export function saveGameExists() {
     return !!localStorage.getItem("RelicsSave");
@@ -21,6 +22,8 @@ export function newSave(): GameState {
 
 export function saveGame(gameState: GameState, manualSave: boolean = false) {
     gameState.saveTime = new Date();
+    gameState.version = CURRENT_VERSION;
+
     if(manualSave) addJournalEntry(gameState, "Game Saved");
     localStorage.setItem("RelicsSave", btoa(JSON.stringify(gameState)));
 }
@@ -37,6 +40,7 @@ export function importSave(): GameState | null {
     }}
 
 export function exportSave(gameState: GameState): string {
+    gameState.version = CURRENT_VERSION;
     saveGame(gameState);
     return btoa(JSON.stringify(gameState));
 }

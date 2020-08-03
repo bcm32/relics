@@ -13,3 +13,4 @@ export const SETTINGS_PANEL_KEY = "SETTINGS";
 export const GENERATORS_PANEL_KEY = "GENERATORS";
 export const LAB_KEY = "LAB";
 export const RITUAL_PANEL_KEY = "RITUALS";
+export const PATCH_NOTES_KEY = "PATCH_NOTES";
