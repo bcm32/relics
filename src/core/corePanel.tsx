@@ -4,13 +4,20 @@ import {RelicPanel} from "../panels/relicPanel";
 import {Settings} from "../panels/settings";
 import {GameState} from "./game-state";
 import {GameClock} from "./game-clock";
-import {GENERATORS_PANEL_KEY, LAB_KEY, RITUAL_PANEL_KEY, SETTINGS_PANEL_KEY} from "../config/constants";
+import {
+    GENERATORS_PANEL_KEY,
+    LAB_KEY,
+    PATCH_NOTES_KEY,
+    RITUAL_PANEL_KEY,
+    SETTINGS_PANEL_KEY
+} from "../config/constants";
 import {addJournalEntry, clearJournal} from "./journal";
 import {AdventureLog} from "../panels/adventureLog";
 import {ResourcePanel} from "../panels/resourcePanel";
 import {PanelSelector} from "../layout/panelSelector";
 import {ResearchLab} from "../panels/lab";
 import {RitualPanel} from "../panels/ritualPanel";
+import {PatchNotePanel} from "../panels/patchNotes";
 
 type CoreProps = {}
 type CoreState = {
@@ -104,6 +111,7 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         onSave={() => this.save()}
                         onClearSave={() => this.clearSave()}
                         onImportSave={(save: GameState | null) => this.importSave(save)}
+                        onChangePanel={(panelKey: string) => this.changeActivePanel(panelKey)}
                     />
                 );
                 break;
@@ -121,6 +129,11 @@ export class CorePanel extends React.Component<CoreProps, CoreState> {
                         gameState={this.state.gameState}
                         onPurchase={(purchaseAmount: number, transaction: any) => this.makePurchase(purchaseAmount, transaction)}
                     />
+                );
+                break;
+            case PATCH_NOTES_KEY:
+                activePanel = (
+                    <PatchNotePanel/>
                 );
                 break;
             case GENERATORS_PANEL_KEY:

@@ -3,15 +3,15 @@ import {GameState} from "../../core/game-state";
 import {ACHIEVEMENT_ENTRY_TYPE, addDetailedJournalEntry} from "../../core/journal";
 import React from "react";
 
-export class BetterShovels extends Research {
+export class SearchAlgorithms extends Research {
     static updateClock = false;
 
     static commitTransaction(gameState: GameState, amount: number): GameState {
-        if(BetterShovels.isValidPurchase(gameState, amount)) {
+        if(SearchAlgorithms.isValidPurchase(gameState, amount)) {
             gameState.resourceState.money -= 25;
-            gameState.researchState.betterShovels = true;
+            gameState.researchState.searchAlgorithms = true;
             addDetailedJournalEntry(gameState, {
-                entry: "+1 Shovel",
+                entry: "The students look like idiots out there, but the results don't lie. +0.5 base relics/s",
                 entryType: ACHIEVEMENT_ENTRY_TYPE
             });
         }
@@ -19,28 +19,29 @@ export class BetterShovels extends Research {
     }
 
     static isValidPurchase(gameState: GameState, amount: number): boolean {
-        return gameState.resourceState.money >= 25;
+        return gameState.resourceState.knowledge >= 30 && gameState.resourceState.relics >= 200;
     }
 
     static buildTooltip(gameState: GameState): any {
         return (
             <div className="relics-tooltip">
                 <div className="relics-tooltip__description">
-                    Buy the team their very first shovel. It's better than none.
+                    Teach the students how to search more efficiently. It works for you but it might just be confirmation bias.
                     <br/>Student base gathering rate +0.5 relics/s
                 </div>
                 <div className="relics-tooltip__cost">
-                    <div className="money-text">Money: 25</div>
+                    <div className="knowledge-text">Knowledge: 30</div>
+                    <div>Relics: 200</div>
                 </div>
             </div>
         );
     }
 
     static isAvailable(gameState: GameState): boolean {
-        return gameState.researchState.profiteering && !gameState.researchState.betterShovels;
+        return gameState.researchState.betterShovels && !gameState.researchState.searchAlgorithms;
     }
 
-    static title = "Better Shovels";
-    static id = "better-shovels";
-    static className = "money-button";
+    static title = "Search Algorithms";
+    static id = "search-algorithms";
+    static className = "knowledge-button";
 }

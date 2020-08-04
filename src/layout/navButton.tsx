@@ -15,11 +15,11 @@ export class NavButton extends React.Component<NavButtonProps> {
 
         const clickFunc = this.props.disabled ? () => {} : this.props.onClick;
         return (
-            <span
+            <div
                 className={className}
                 onClick={clickFunc}>
                 {this.props.children}
-            </span>
+            </div>
         )
     }
 }

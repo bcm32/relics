@@ -63,7 +63,8 @@ export class GameClock {
         // Calculate rates and side effects
         if(this.gameState.jobAssignments.gatherRelics) {
             const relicsMultiplier = 1
-                + (this.gameState.researchState.betterShovels ? .5 : 0);
+                + (this.gameState.researchState.betterShovels ? .5 : 0)
+                + (this.gameState.researchState.searchAlgorithms ? .5 : 0);
             relicsPerSecond = this.gameState.jobAssignments.gatherRelics*.5*relicsMultiplier;
         }
         if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*10*this.tickRatio) {

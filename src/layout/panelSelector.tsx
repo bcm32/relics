@@ -13,7 +13,7 @@ export class PanelSelector extends React.Component<PanelSelectorProps>{
         const {onChangePanel, selected, gameState} = this.props;
         let name = "Dig Site";
         return (
-            <div className={"nav-panel"}>
+            <div className={"nav-panel button-container"}>
                 <NavButton selected={selected === GENERATORS_PANEL_KEY}
                            onClick={() => onChangePanel(GENERATORS_PANEL_KEY)}>
                     {name}
@@ -35,6 +35,8 @@ export class PanelSelector extends React.Component<PanelSelectorProps>{
                            onClick={() => onChangePanel(SETTINGS_PANEL_KEY)}>
                     Settings
                 </NavButton>
+
+
             </div>
         );
     }
