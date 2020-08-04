@@ -35,8 +35,13 @@ export class ResearchLab extends React.Component<LabProps> {
     render() {
         const { gameState, onPurchase } = this.props;
         const availableStudents = countAvailableStudents(gameState);
-        const availableResearch = getAvailableResearches(gameState).map((research) => this.createResearchButton(research));
-
+        let availableResearch = getAvailableResearches(gameState).map((research) => this.createResearchButton(research));
+        if(availableResearch.length < 1) {
+            availableResearch = [<div>
+                You have exhausted all available potential research.<br/>
+                Perhaps more will come to you as you look into other matters.
+            </div>];
+        }
         return (
             <div>
                 <div className="button-container">
@@ -65,8 +70,10 @@ export class ResearchLab extends React.Component<LabProps> {
                 }
 
                 <div>
-                    <p>Research</p>
-                    { availableResearch }
+                    <h2>Research</h2>
+                    <div className="outline-container">
+                        { availableResearch }
+                    </div>
                 </div>
             </div>
         );
