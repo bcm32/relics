@@ -20,18 +20,24 @@ export function randomEvent(gameState: GameState) {
         gameState.resourceState.relics += 100
     }
 
+    // Likelihood and damage of a blood event
     let dreadEventChance = Math.log10(gameState.resourceState.blood);
+    let bloodLoss = gameState.resourceState.blood*.8; // Expected value to lose in a bad event
+    bloodLoss = Math.max(bloodLoss, 1);
     if(dreadEventChance > 10) dreadEventChance = 10;
     if(dreadEventChance < 1) dreadEventChance = 1;
-    console.log(dreadEventChance, " & ", diceRoll)
+    gameState.resourceState.bloodLoss = bloodLoss;
+    gameState.resourceState.bloodChance = dreadEventChance;
+
     if(diceRoll <= dreadEventChance && gameState.resourceState.students > 2) {
         // A dark event occurs, protect with blood
         // Mitigate risk & loss
-        const bloodLoss = Math.max(gameState.resourceState.blood*.8, 1);
         if(gameState.researchState.bloodWard && gameState.resourceState.blood >= bloodLoss) {
+            const journalEntry = ((dreadEventChance >= 5 ) ? "Your hoarding of blood attracts something sinister.": "")
+                + `The ward protects a student in exchange for ${bloodLoss.toFixed()} blood.`;
             gameState.resourceState.blood = safeResource(gameState.resourceState.blood) - bloodLoss;
             addDetailedJournalEntry(gameState, {
-                entry: `The ward protects the student in exchange for ${bloodLoss.toFixed()} blood.`,
+                entry: journalEntry,
                 entryType: BLOOD_ENTRY_TYPE,
             });
         }

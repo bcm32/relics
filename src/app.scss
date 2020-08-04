@@ -234,12 +234,14 @@ h2 {
 .nav-panel {
   height: 36px;
   padding-top: 8px;
+  display: flex;
 }
 .nav-button {
   border: $dark-gray 1px solid;
   padding: 6px;
   cursor: pointer;
   user-select: none;
+  max-width: 150px;
 
   &:hover{
     background-color: $gray-brown;
@@ -300,4 +302,27 @@ html, body, #root {
 
 .font-italics {
   font-style: italic;
+}
+
+.blood-meter {
+  width: 200px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.blood-meter__alert{
+  border: 1px solid $dark-gray;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  &.blood-meter__alert--ok {
+    background: lightgreen;
+  }
+  &.blood-meter__alert--medium {
+    background: orange;
+  }
+  &.blood-meter__alert--high {
+    background: $blood-color;
+  }
 }

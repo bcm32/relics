@@ -24,6 +24,8 @@ export class ResourceState {
     knowledgeCap: number = 0;
     blood: number = 0;
     bloodRate: number = 0;
+    bloodLoss: number = 0;
+    bloodChance: number = 0;
     money: number = 0;
     moneyRate = 0;
     moneyCap = 0;
@@ -60,9 +62,11 @@ export class ResearchState {
     profiteering: boolean = false;
     betterShovels: boolean = false;
     bloodWard: boolean = false;
+    bloodMeter: boolean = false;
     mapTheGrounds: boolean = false;
     tours: boolean = false;
     ritualCircle: boolean = false;
+    searchAlgorithms: boolean = false;
 }
 
 export function mergeStateWithDefault(gameState: GameState): GameState {

@@ -72,7 +72,9 @@ export class ResearchLab extends React.Component<LabProps> {
                 <div>
                     <h2>Research</h2>
                     <div className="outline-container">
-                        { availableResearch }
+                        <div className={"button-container"}>
+                            { availableResearch }
+                        </div>
                     </div>
                 </div>
             </div>

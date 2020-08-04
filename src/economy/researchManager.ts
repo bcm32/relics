@@ -8,6 +8,8 @@ import {MapTheRuins} from "./research/mapTheRuins";
 import {Tours} from "./research/tours";
 import {Banks} from "./research/banks";
 import {RitualCircle} from "./research/ritualCircle";
+import {SearchAlgorithms} from "./research/searchAlgorithms";
+import {BloodMeter} from "./research/bloodMeter";
 
 export const allResearches: typeof Research[] = [
     BetterShovels,
@@ -18,6 +20,8 @@ export const allResearches: typeof Research[] = [
     Tours,
     Banks,
     RitualCircle,
+    SearchAlgorithms,
+    BloodMeter
 ];
 
 export function getAvailableResearches(gameState: GameState): typeof Research[] {
