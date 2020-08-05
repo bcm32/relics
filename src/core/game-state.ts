@@ -9,6 +9,7 @@ export class GameState {
     achievements: Achievements = new Achievements();
     researchState: ResearchState = new ResearchState();
     saveTime: Date = new Date();
+    runStartTime: Date = new Date();
     version: string = CURRENT_VERSION;
 }
 
@@ -78,6 +79,6 @@ export function mergeStateWithDefault(gameState: GameState): GameState {
     newState.settings = {...newState.settings, ...gameState.settings};
     newState.achievements = {...newState.achievements, ...gameState.achievements};
     newState.researchState = {...newState.researchState, ...gameState.researchState};
-
+    newState.runStartTime = newState.runStartTime ? newState.runStartTime : new Date();
     return newState;
 }

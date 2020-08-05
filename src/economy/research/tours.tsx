@@ -12,8 +12,8 @@ export class Tours extends Research {
             gameState.researchState.tours = true;
             addDetailedJournalEntry(gameState, {
                 entry: "Wait, people will pay to see this place? " +
-                    "Your students begin offering tours and open a gift shop.",
-                entryType: COMMON_ENTRY_TYPE
+                    "Opened a gift shop at the dig site.",
+                entryType: ACHIEVEMENT_ENTRY_TYPE
             });
         }
         return gameState;
