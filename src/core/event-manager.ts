@@ -4,8 +4,10 @@ import {countAvailableStudents, removeGatherers, removeGiftShop, removeStudyReli
 import {safeResource} from "../economy/Transaction";
 import {formatRateNumber} from "../shared/formatNumbers";
 
+const MAX_RANDOM_EVENTS_PER_TICK = 5;
+
 export function randomEventsForDuration(gameState: GameState, amount: number) {
-    for (let i = 0; i < amount; i++) {
+    for (let i = 0; i < amount && i < MAX_RANDOM_EVENTS_PER_TICK; i++) {
         randomEvent(gameState);
     }
 }
@@ -47,7 +49,7 @@ export function randomEvent(gameState: GameState) {
                     removeGatherers(1, gameState);
                 } else if (gameState.jobAssignments.studyRelics >= 1) {
                     removeStudyRelics(1, gameState);
-                } else if (gameState.jobAssignments.studyRelics >= 1) {
+                } else if (gameState.jobAssignments.giftShop >= 1) {
                     removeGiftShop(1, gameState);
                 }
             }

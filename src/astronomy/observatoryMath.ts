@@ -1,10 +1,11 @@
 import {CSSProperties} from "react";
 
-export const MS_TO_IN_GAME_DAYS = 5*1000;
+export const MS_TO_IN_GAME_DAYS = 2*1000;
 
 export const MOON_ROTATION_DAYS = 27;
 export const SOLAR_YEAR_DAYS = 356;
 export const CHART_RADIUS = 30;
+export const EARTH_DAY = 1;
 
 export function getDayNumber(msElapsed: number) {
   return msElapsed / MS_TO_IN_GAME_DAYS;
@@ -22,11 +23,15 @@ export function getMoonPosition(msElapsed: number) {
 }
 
 export function getMoonStyles(msElapsed: number):CSSProperties {
-    return getCelestialBodyStyles(msElapsed, MOON_ROTATION_DAYS, 5, 10, 1.2);
+    return getCelestialBodyStyles(msElapsed, MOON_ROTATION_DAYS, 5, 10, 1.4);
 }
 
 export function getSunStyles(msElapsed: number):CSSProperties {
-    return getCelestialBodyStyles(msElapsed, SOLAR_YEAR_DAYS, 5, 30, 1.5);
+    return getCelestialBodyStyles(msElapsed, SOLAR_YEAR_DAYS, 5, 30, 1.6);
+}
+
+export function getBaseStyles(msElapsed: number):CSSProperties {
+    return getCelestialBodyStyles(msElapsed, EARTH_DAY, 5, 55, 0.7);
 }
 
 export function getCelestialBodyStyles(msElapsed: number, orbitTime: number, offsetX = 0, offsetY = 0, multiplier=1):CSSProperties {
