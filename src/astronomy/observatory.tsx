@@ -1,9 +1,9 @@
 import React, {CSSProperties} from "react";
 import {GameState} from "../core/game-state";
 import {
-    getBaseStyles,
+    getBaseStyles, getCalendarDay,
     getMoonPosition,
-    getMoonStyles,
+    getMoonStyles, getSeason,
     getSunPosition, getSunStyles,
     MS_TO_IN_GAME_DAYS
 } from "./observatoryMath";
@@ -21,7 +21,6 @@ export class Observatory extends React.Component<AstronomyState> {
 
     render() {
         const msElapsed =  new Date().getTime() - this.runStartTime.getTime();
-        const dayNumber = msElapsed / MS_TO_IN_GAME_DAYS;
         const sunClockPosition = getSunPosition(msElapsed);
         const moonClockPosition = getMoonPosition(msElapsed);
         const sunMoonDiff = Math.abs(sunClockPosition - moonClockPosition);
@@ -33,7 +32,9 @@ export class Observatory extends React.Component<AstronomyState> {
 
         return (
             <div style={{position: "absolute"}}>
-                Star Chart - Day {dayNumber.toFixed()}
+                <div >Star Chart</div>
+                <div className="star-chart__stats">{getCalendarDay(msElapsed)}</div>
+                <div className="star-chart__stats">Season: {getSeason(sunClockPosition)}</div>
                 <div className="star-chart">
                     <div className={moonClass}
                          style={getMoonStyles(msElapsed)}>☽</div>

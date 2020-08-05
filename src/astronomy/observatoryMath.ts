@@ -11,6 +11,23 @@ export function getDayNumber(msElapsed: number) {
   return msElapsed / MS_TO_IN_GAME_DAYS;
 }
 
+export function getCalendarDay(msElapsed: number) {
+    const day = (getDayNumber(msElapsed)%SOLAR_YEAR_DAYS).toFixed();
+    const year = (getDayNumber(msElapsed)/SOLAR_YEAR_DAYS).toFixed();
+    return `Day ${day}, Year ${year}`
+}
+
+export function getSeason(sunClockPosition: number) {
+    if(sunClockPosition <= 3) {
+        return "🏵";
+    } else if(sunClockPosition <= 6) {
+        return "☼";
+    } else if(sunClockPosition <= 9) {
+        return "🙐";
+    }
+    return "❄";
+}
+
 // Positions START aligned, for now.
 export function getSunPosition(msElapsed: number) {
     const sunLocation = (getDayNumber(msElapsed)%SOLAR_YEAR_DAYS)/SOLAR_YEAR_DAYS;

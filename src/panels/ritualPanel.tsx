@@ -36,7 +36,7 @@ export class RitualPanel extends React.Component<RitualProps> {
                         </RelicsButton>
                     </div>
                 </div>
-                <div>
+                <div className={"sub-panel"}>
                     {gameState.researchState.bloodMeter && (
                         <div className="outline-container blood-meter">
                             <div>
@@ -47,7 +47,9 @@ export class RitualPanel extends React.Component<RitualProps> {
                             <div className={alertClass}/>
                         </div>
                     )}
-                    <Observatory gameState={gameState}/>
+                    <div>
+                        <Observatory gameState={gameState}/>
+                    </div>
                 </div>
             </div>
         );
