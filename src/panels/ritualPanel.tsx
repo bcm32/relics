@@ -3,6 +3,7 @@ import { GameState } from "../core/game-state";
 import {RelicsButton} from "../shared/relicsButton";
 import {BleedingStonesTransaction} from "../economy/rituals/bleedingStones";
 import {Observatory} from "../astronomy/observatory";
+import {SacrificeTransaction} from "../economy/transactions/sacrificeTransaction";
 
 type RitualProps = {
     gameState: GameState,
@@ -33,6 +34,18 @@ export class RitualPanel extends React.Component<RitualProps> {
                             tooltip={BleedingStonesTransaction.buildTooltip(gameState)}
                         >
                             Bleeding Stone: {gameState.resourceState.bleedingStones}
+                        </RelicsButton>
+                    </div>
+                    <h2>Rituals:</h2>
+                    <div className="button-container">
+                        <RelicsButton
+                            disabled={!SacrificeTransaction.isValidPurchase(gameState, 1)}
+                            onClick={() => onPurchase(1, SacrificeTransaction.commitTransaction)}
+                            className={"blood-button"}
+                            id="sacStudent"
+                            tooltip={SacrificeTransaction.buildTooltip(gameState)}
+                        >
+                            Sacrifice a Student
                         </RelicsButton>
                     </div>
                 </div>

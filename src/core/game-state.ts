@@ -44,8 +44,9 @@ export class JobAssignments {
 
 export class JournalState {
     entries: DetailedEntry[] = [{
+        id: Math.random(),
         entry: "The new dig site lays before me, I wonder what treasures lay yet unearthed?",
-        entryType: COMMON_ENTRY_TYPE
+        entryType: COMMON_ENTRY_TYPE,
     }];
 }
 

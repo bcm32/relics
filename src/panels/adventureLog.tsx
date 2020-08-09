@@ -27,7 +27,7 @@ export class AdventureLog extends React.Component<JournalProps> {
     render() {
         const { journalState, clearLog } = this.props;
         const entryList = journalState.entries.slice(0).reverse().map((entry) =>
-            <div className={this.getClassName(entry)}>
+            <div key={entry.id} className={this.getClassName(entry)}>
                 {entry.entry}
             </div>
         );

@@ -95,11 +95,37 @@ h2 {
 /****************
   Journal
  ****************/
+@keyframes fadeIn {
+  0% {
+    opacity:0
+  }
+  100% {
+    opacity:1;
+  }
+}
+@keyframes openSpace {
+  to {
+    max-height: 50px;
+  }
+}
+
 .journal {
   overflow: hidden;
 
   .journal__entry {
     color: $dark-gray;
+
+    &:first-of-type {
+      animation:
+        fadeIn 1s linear,
+        openSpace 0.2s ease forwards;
+      display: none;
+    }
+
+    &.none {
+      display:none
+    }
+
   }
 }
 

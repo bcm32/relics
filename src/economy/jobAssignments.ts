@@ -33,6 +33,26 @@ export function removeGiftShop(amount: number, gameState: GameState){
     if(gameState.jobAssignments.giftShop < 0) gameState.jobAssignments.studyRelics = 0;
 }
 
+export function removeAssignedStudents(gameState: GameState, amount: number) {
+    let remainingRemovals = amount;
+
+    let removed = 0;
+    if (gameState.jobAssignments.gatherRelics >= remainingRemovals) {
+        removed = (remainingRemovals > gameState.jobAssignments.gatherRelics) ? gameState.jobAssignments.gatherRelics : remainingRemovals;
+        removeGatherers(removed, gameState);
+        remainingRemovals -= removed;
+    }
+    if (gameState.jobAssignments.studyRelics >= remainingRemovals && remainingRemovals > 0) {
+        removed = (remainingRemovals > gameState.jobAssignments.gatherRelics) ? gameState.jobAssignments.studyRelics : remainingRemovals;
+        removeStudyRelics(remainingRemovals, gameState);
+        remainingRemovals -= removed;
+    }
+    if (gameState.jobAssignments.giftShop >= remainingRemovals  && remainingRemovals > 0) {
+        removed = (remainingRemovals > gameState.jobAssignments.gatherRelics) ? gameState.jobAssignments.studyRelics : remainingRemovals;
+        removeGiftShop(remainingRemovals, gameState);
+        remainingRemovals -= removed;
+    }}
+
 export function countAvailableStudents(gameState: GameState) {
     const assignedStudents = (gameState.jobAssignments.gatherRelics || 0)
         + (gameState.jobAssignments.studyRelics || 0)

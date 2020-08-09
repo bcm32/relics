@@ -8,12 +8,20 @@ export const BLOOD_ENTRY_TYPE = "BLOOD";
 export type DetailedEntry = {
     entry: string,
     entryType: string,
+    id: number
+}
+
+export type DetailedEntryInput = {
+    entry: string,
+    entryType: string,
+    id?: number
 }
 
 export function addJournalEntry(gameState: GameState, entry: string){
     gameState.journalState.entries.push({
         entry: entry,
-        entryType: COMMON_ENTRY_TYPE
+        entryType: COMMON_ENTRY_TYPE,
+        id: Math.random()
     });
     if(gameState.journalState.entries.length >= MAX_LOG_SIZE) {
         gameState.journalState.entries.shift();
@@ -21,8 +29,12 @@ export function addJournalEntry(gameState: GameState, entry: string){
     return gameState;
 }
 
-export function addDetailedJournalEntry(gameState: GameState, entry: DetailedEntry){
-    gameState.journalState.entries.push(entry);
+export function addDetailedJournalEntry(gameState: GameState, entry: DetailedEntryInput){
+    if(!entry.id) {
+        entry.id = Math.random();
+    }
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    gameState.journalState.entries.push(<DetailedEntry>entry);
     if(gameState.journalState.entries.length >= MAX_LOG_SIZE) {
         gameState.journalState.entries.shift();
     }

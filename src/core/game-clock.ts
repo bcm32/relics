@@ -66,11 +66,14 @@ export class GameClock {
                 + (this.gameState.researchState.betterShovels ? .5 : 0)
                 + (this.gameState.researchState.searchAlgorithms ? .5 : 0);
             relicsPerSecond = this.gameState.jobAssignments.gatherRelics*.5*relicsMultiplier;
+            newState.resourceState.relics += relicsPerSecond*this.tickRatio;
         }
-        if(this.gameState.jobAssignments.studyRelics && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*10*this.tickRatio) {
+        if(this.gameState.jobAssignments.studyRelics
+            && this.gameState.resourceState.relics >= this.gameState.jobAssignments.gatherRelics*10*this.tickRatio) {
             const relicConsumptionRate = this.gameState.jobAssignments.studyRelics*10;
             relicsPerSecond -= relicConsumptionRate;
             knowledgePerSecond = this.gameState.jobAssignments.studyRelics*.1;
+            newState.resourceState.relics -= relicConsumptionRate*this.tickRatio;
         }
         if(this.gameState.researchState.profiteering) {
             moneyPerSecond = .25;
@@ -79,6 +82,7 @@ export class GameClock {
                 if(this.gameState.resourceState.relics >= requiredRelicConsumption) {
                     moneyPerSecond += this.gameState.jobAssignments.giftShop * .125;
                     relicsPerSecond -= requiredRelicConsumption;
+                    newState.resourceState.relics -= requiredRelicConsumption*this.tickRatio;
                 }
             }
         }
@@ -87,7 +91,6 @@ export class GameClock {
 
         // Apply rates to resources
         newState.resourceState.money     += moneyPerSecond      *this.tickRatio;
-        newState.resourceState.relics    += relicsPerSecond     *this.tickRatio;
         newState.resourceState.knowledge += knowledgePerSecond  *this.tickRatio;
         newState.resourceState.blood     += bloodPerSecond      *this.tickRatio;
 
